@@ -1,36 +1,86 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Capybara CMS
 
-## Getting Started
+一个现代化的内容管理系统，基于 Next.js 构建。
 
-First, run the development server:
+## 技术栈
+
+- **框架**: [Next.js 16](https://nextjs.org) - React 全栈框架
+- **前端**: [React 19](https://react.dev) - 用户界面库
+- **样式**: [Tailwind CSS 4](https://tailwindcss.com) - 原子化 CSS 框架
+- **UI 组件**: [shadcn/ui](https://ui.shadcn.com) - 可定制的 React 组件库
+- **图标**: [Lucide](https://lucide.dev) - 精美的开源图标库
+- **语言**: [TypeScript](https://www.typescriptlang.org) - 类型安全的 JavaScript 超集
+- **包管理**: [pnpm](https://pnpm.io) - 快速、节省磁盘空间的包管理器
+
+## 开始使用
+
+### 环境要求
+
+- Node.js 18.17 或更高版本
+- pnpm 8.0 或更高版本
+
+### 安装依赖
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+pnpm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 启动开发服务器
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+pnpm dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+在浏览器中打开 [http://localhost:3000](http://localhost:3000) 查看结果。
 
-## Learn More
+### 构建生产版本
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+pnpm build
+pnpm start
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 项目结构
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```
+capybara-cms/
+├── app/                 # Next.js App Router 页面
+├── components/          # React 组件
+│   └── ui/             # shadcn/ui 组件
+├── lib/                 # 工具函数和共享逻辑
+├── public/              # 静态资源文件
+└── ...配置文件
+```
 
-## Deploy on Vercel
+## 开发
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 代码检查
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+pnpm lint
+```
+
+### 添加 shadcn/ui 组件
+
+```bash
+pnpm dlx shadcn add <component-name>
+```
+
+## 部署
+
+### Vercel 部署
+
+最简单的部署方式是使用 [Vercel Platform](https://vercel.com/new)，由 Next.js 的创作者提供。
+
+查看 [Next.js 部署文档](https://nextjs.org/docs/app/building-your-application/deploying) 了解更多详情。
+
+## 文档资源
+
+- [Next.js 文档](https://nextjs.org/docs) - 了解 Next.js 的功能和 API
+- [React 文档](https://react.dev) - 学习 React
+- [Tailwind CSS 文档](https://tailwindcss.com/docs) - 探索 Tailwind CSS
+- [shadcn/ui 文档](https://ui.shadcn.com/docs) - 组件使用指南
+
+## 许可证
+
+MIT License

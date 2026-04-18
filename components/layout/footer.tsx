@@ -8,22 +8,17 @@ import { useGSAP } from "@gsap/react";
 
 const footerLinks = {
   product: [
-    { href: "#features", label: "功能" },
-    { href: "#pricing", label: "价格" },
-    { href: "#integrations", label: "集成" },
-    { href: "#changelog", label: "更新日志" },
+    { href: "/#value", label: "产品主张" },
+    { href: "/#features", label: "产品能力" },
+    { href: "/#pricing", label: "方案与报价" },
   ],
   resources: [
-    { href: "#docs", label: "文档" },
-    { href: "#api", label: "API 参考" },
-    { href: "#guides", label: "使用指南" },
-    { href: "#blog", label: "博客" },
+    { href: "/#faq", label: "常见问题" },
+    { href: "/blog", label: "博客" },
   ],
   company: [
-    { href: "#about", label: "关于我们" },
-    { href: "#careers", label: "招聘" },
-    { href: "#contact", label: "联系我们" },
-    { href: "#press", label: "媒体" },
+    { href: "/about", label: "关于我们" },
+    { href: "/about#contact", label: "联系与演示" },
   ],
 };
 
@@ -49,6 +44,7 @@ export function Footer() {
         autoAlpha: 0,
         duration: 0.65,
         stagger: 0.07,
+        immediateRender: false,
       }).from(
         foot.querySelectorAll(".motion-foot-bar > *"),
         {
@@ -56,6 +52,7 @@ export function Footer() {
           autoAlpha: 0,
           duration: 0.55,
           stagger: 0.05,
+          immediateRender: false,
         },
         "-=0.35"
       );
@@ -87,8 +84,8 @@ export function Footer() {
               </svg>
               <span>Capybara CMS</span>
             </Link>
-            <p className="mt-4 text-sm text-muted-foreground">
-              为现代企业打造的智能内容管理平台。
+            <p className="mt-4 max-w-xs text-sm leading-relaxed text-muted-foreground">
+              从草稿到上线，每一跳都留痕。编辑、工程与智能体同一节拍的内容中台。
             </p>
           </div>
 
@@ -143,20 +140,14 @@ export function Footer() {
 
         <div className="motion-foot-bar mt-12 flex flex-col items-start justify-between gap-4 border-t border-border/40 pt-8 sm:flex-row sm:items-center">
           <p className="text-sm text-muted-foreground">
-            © 2024 Capybara CMS. All rights reserved.
+            © 2026 Capybara CMS. All rights reserved.
           </p>
-          <div className="flex items-center gap-4">
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
             <Link
-              href="#privacy"
+              href="/about#contact"
               className="text-sm text-muted-foreground transition-colors hover:text-foreground"
             >
-              隐私政策
-            </Link>
-            <Link
-              href="#terms"
-              className="text-sm text-muted-foreground transition-colors hover:text-foreground"
-            >
-              服务条款
+              法务与合规咨询
             </Link>
           </div>
         </div>

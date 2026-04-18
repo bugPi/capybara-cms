@@ -1,16 +1,26 @@
 "use client";
 
-import Image from "next/image";
+import "@/lib/gsap-register";
 import { useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { ArrowRight, Braces, Play, ShieldCheck, Workflow } from "lucide-react";
+import {
+  ArrowRight,
+  Braces,
+  Play,
+  PlugZap,
+  ScanSearch,
+  ShieldCheck,
+  Workflow,
+} from "lucide-react";
 
 const highlights = [
   { icon: ShieldCheck, label: "治理与合规" },
   { icon: Braces, label: "API 优先" },
+  { icon: PlugZap, label: "MCP 发博客" },
+  { icon: ScanSearch, label: "SEO 就绪" },
   { icon: Workflow, label: "多站点编排" },
 ];
 
@@ -23,25 +33,156 @@ export function Hero() {
 
   useGSAP(
     () => {
-      const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+      const el = root.current;
+      const p = panel.current;
+      if (!el || !p) return;
 
-      tl.from(".hero-reveal", {
-        y: 32,
-        autoAlpha: 0,
-        duration: 0.85,
-        stagger: 0.07,
-      }).from(
-        panel.current,
-        {
-          y: 48,
+      const mm = gsap.matchMedia();
+
+      mm.add("(prefers-reduced-motion: reduce)", () => {
+        gsap.set(
+          ".hero-title-inner, .hero-reveal-block, .hero-hl, .hero-reveal-cta, .hero-eyebrow",
+          {
+            autoAlpha: 1,
+            y: 0,
+            yPercent: 0,
+            filter: "none",
+          }
+        );
+        gsap.set(p, {
+          autoAlpha: 1,
+          y: 0,
+          x: 0,
+          rotateX: 0,
+          scale: 1,
+          rotation: 0,
+        });
+        gsap.set(".hero-watermark", { autoAlpha: 0.35 });
+        gsap.set(".hero-scroll-fade", { autoAlpha: 1, y: 0 });
+      });
+
+      mm.add("(prefers-reduced-motion: no-preference)", () => {
+        const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+
+        tl.from(".hero-eyebrow", {
+          y: 16,
           autoAlpha: 0,
-          rotateX: 10,
-          scale: 0.96,
-          duration: 1,
-          ease: "power4.out",
-        },
-        "-=0.55"
-      );
+          duration: 0.5,
+        })
+          .from(
+            ".hero-title-inner",
+            {
+              yPercent: 108,
+              autoAlpha: 0,
+              rotateX: -42,
+              stagger: 0.12,
+              duration: 0.72,
+              ease: "power4.out",
+            },
+            "-=0.2"
+          )
+          .from(
+            ".hero-reveal-block",
+            {
+              y: 26,
+              autoAlpha: 0,
+              duration: 0.65,
+            },
+            "-=0.38"
+          )
+          .from(
+            ".hero-hl",
+            {
+              y: 14,
+              autoAlpha: 0,
+              duration: 0.4,
+              stagger: 0.06,
+            },
+            "-=0.32"
+          )
+          .from(
+            ".hero-reveal-cta",
+            {
+              y: 18,
+              autoAlpha: 0,
+              duration: 0.48,
+              stagger: 0.1,
+            },
+            "-=0.25"
+          )
+          .from(
+            p,
+            {
+              y: 64,
+              autoAlpha: 0,
+              rotateX: 8,
+              rotation: -2,
+              scale: 0.94,
+              duration: 1.05,
+              ease: "power4.out",
+              immediateRender: false,
+            },
+            "-=0.65"
+          );
+
+        gsap.to(".hero-parallax-grid", {
+          y: 120,
+          ease: "none",
+          scrollTrigger: {
+            trigger: el,
+            start: "top top",
+            end: "bottom top",
+            scrub: 0.85,
+          },
+        });
+
+        gsap.to(".hero-watermark", {
+          xPercent: -12,
+          ease: "none",
+          scrollTrigger: {
+            trigger: el,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: 1,
+          },
+        });
+
+        gsap.to(".hero-scroll-fade", {
+          y: -52,
+          autoAlpha: 0.42,
+          ease: "none",
+          scrollTrigger: {
+            trigger: el,
+            start: "top top",
+            end: "bottom top",
+            scrub: 0.7,
+          },
+        });
+
+        gsap.to(".hero-float-a", {
+          y: "+=22",
+          x: "+=10",
+          duration: 4.8,
+          repeat: -1,
+          yoyo: true,
+          ease: "sine.inOut",
+        });
+        gsap.to(".hero-float-b", {
+          y: "-=20",
+          x: "-=14",
+          duration: 6.2,
+          repeat: -1,
+          yoyo: true,
+          ease: "sine.inOut",
+        });
+        gsap.to(".hero-float-c", {
+          scale: 1.06,
+          duration: 3.4,
+          repeat: -1,
+          yoyo: true,
+          ease: "sine.inOut",
+        });
+      });
 
       if (glow.current) {
         gsap.to(glow.current, {
@@ -78,30 +219,30 @@ export function Hero() {
         }
       }
 
-      const el = root.current;
-      const p = panel.current;
-      if (!el || !p) return;
-
       const xTo = gsap.quickTo(p, "x", { duration: 0.65, ease: "power3" });
       const yTo = gsap.quickTo(p, "y", { duration: 0.65, ease: "power3" });
+      const rotTo = gsap.quickTo(p, "rotation", { duration: 0.75, ease: "power3" });
 
       const onMove = (e: PointerEvent) => {
         const r = el.getBoundingClientRect();
         const px = (e.clientX - r.left) / r.width - 0.5;
         const py = (e.clientY - r.top) / r.height - 0.5;
-        xTo(px * 14);
-        yTo(py * 10);
+        xTo(px * 18);
+        yTo(py * 12);
+        rotTo(-2 + px * 3);
       };
 
       const onLeave = () => {
         xTo(0);
         yTo(0);
+        rotTo(-2);
       };
 
       el.addEventListener("pointermove", onMove);
       el.addEventListener("pointerleave", onLeave);
 
       return () => {
+        mm.revert();
         el.removeEventListener("pointermove", onMove);
         el.removeEventListener("pointerleave", onLeave);
       };
@@ -112,134 +253,111 @@ export function Hero() {
   return (
     <section
       ref={root}
-      className="hero-enterprise relative overflow-hidden border-b border-border/60 [perspective:1400px]"
+      className="hero-slice-bottom relative min-h-[min(100svh,56rem)] overflow-hidden border-b border-border/50 bg-transparent perspective-[1400px]"
       aria-labelledby="hero-heading"
     >
       <div
-        className="pointer-events-none absolute inset-0 opacity-[0.4] dark:opacity-[0.28]"
+        className="hero-watermark pointer-events-none absolute left-1/2 top-[18%] z-0 -translate-x-1/2 sm:top-[12%]"
         aria-hidden
       >
-        <div
-          className="absolute inset-0"
-          style={{
-            backgroundImage:
-              "linear-gradient(to right, oklch(0.55 0.02 264 / 0.07) 1px, transparent 1px), linear-gradient(to bottom, oklch(0.55 0.02 264 / 0.07) 1px, transparent 1px)",
-            backgroundSize: "64px 64px",
-          }}
-        />
+        <span className="text-mega-watermark block text-center">CONTENT</span>
       </div>
 
-      {/* Soft vignette */}
-      <div
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_75%_60%_at_50%_-10%,oklch(0.72_0.12_278/0.12),transparent_55%)] dark:bg-[radial-gradient(ellipse_75%_60%_at_50%_-10%,oklch(0.45_0.14_278/0.18),transparent_55%)]"
-        aria-hidden
-      />
-
-      <div className="relative z-10 mx-auto max-w-6xl px-6 py-20 sm:py-24 lg:py-28">
-        <div className="grid items-center gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:gap-12 xl:gap-16">
-          <div className="text-center lg:text-left">
-            <div className="hero-reveal mb-5 flex flex-col items-center gap-3 sm:flex-row sm:justify-center lg:justify-start">
-              <Badge
-                variant="outline"
-                className="border-border/80 bg-background/70 px-3 py-1 text-xs font-medium text-muted-foreground backdrop-blur-sm"
-              >
-                企业内容与发布
-              </Badge>
-              <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                <Image
-                  src="/capybara.svg"
-                  alt=""
-                  width={28}
-                  height={28}
-                  className="opacity-90 dark:invert"
-                  priority
-                />
-                <span className="font-medium text-foreground">Capybara CMS</span>
-              </div>
-            </div>
-
+      <div className="hero-scroll-fade relative z-10 mx-auto max-w-[min(100%,90rem)] px-5 pb-24 pt-24 sm:px-8 sm:pb-28 sm:pt-28 lg:px-14 lg:pb-32 lg:pt-32">
+        <div className="grid gap-12 lg:grid-cols-12 lg:gap-x-10 lg:gap-y-16">
+          <div className="lg:col-span-7">
+            <p className="hero-eyebrow mb-6 font-mono text-[11px] tracking-[0.28em] text-muted-foreground uppercase sm:text-xs">
+              企业内容 · 像列车时刻表一样准
+            </p>
             <h1
               id="hero-heading"
-              className="hero-reveal text-balance text-4xl font-semibold tracking-tight text-foreground sm:text-5xl sm:leading-[1.1] lg:text-[2.75rem] lg:leading-[1.08]"
+              className="max-w-[18ch] text-4xl font-semibold tracking-tighter text-foreground sm:text-5xl sm:leading-[1.05] lg:text-6xl lg:leading-[1.02] xl:text-7xl perspective-[900px]"
             >
-              企业级内容与发布平台
-              <span className="mt-1 block bg-linear-to-r from-indigo-600 via-violet-600 to-indigo-600 bg-clip-text text-transparent sm:mt-1.5 dark:from-indigo-400 dark:via-violet-400 dark:to-indigo-400">
-                治理、集成、交付在一处完成
+              <span className="hero-title-line block overflow-hidden pb-1">
+                <span className="hero-title-inner inline-block origin-[50%_100%]">
+                  从草稿到上线，
+                </span>
+              </span>
+              <span className="hero-title-line block overflow-hidden pb-1">
+                <span className="hero-title-inner text-gradient-brand inline-block origin-[50%_100%]">
+                  每一跳都留痕
+                </span>
               </span>
             </h1>
+          </div>
 
-            <p className="hero-reveal mx-auto mt-5 max-w-xl text-pretty text-base leading-relaxed text-muted-foreground sm:text-lg lg:mx-0">
-              结构化内容模型与工作流，搭配 API 与 Webhook——适合官网矩阵、投关与产品文档；云端或私有化可选，便于对接现有身份体系。
+          <div className="flex flex-col justify-end lg:col-span-5 lg:pl-2">
+            <p className="hero-reveal-block max-w-sm text-pretty text-base leading-relaxed text-muted-foreground sm:text-lg">
+              编辑点发布，工程接 API，智能体过闸机——同一套节拍，谁也不掉拍。
             </p>
 
-            <div className="hero-reveal mx-auto mt-8 flex max-w-xl flex-col gap-3 sm:flex-row sm:flex-wrap sm:justify-center sm:gap-x-6 sm:gap-y-2 lg:mx-0 lg:justify-start">
+            <div className="mt-8 flex flex-wrap gap-2">
               {highlights.map((item) => (
                 <div
                   key={item.label}
-                  className="flex items-center justify-center gap-2 text-sm text-foreground sm:justify-start"
+                  className="hero-hl inline-flex items-center gap-2 rounded-full border border-border/70 bg-background/60 px-3 py-1.5 text-xs text-foreground backdrop-blur-sm sm:text-sm"
                 >
-                  <span className="flex size-8 shrink-0 items-center justify-center rounded-md bg-indigo-500/10 text-indigo-600 dark:bg-indigo-500/15 dark:text-indigo-400">
-                    <item.icon className="size-3.5" aria-hidden />
-                  </span>
+                  <item.icon className="size-3.5 shrink-0 text-brand" aria-hidden />
                   <span className="font-medium">{item.label}</span>
                 </div>
               ))}
             </div>
 
-            <div className="hero-reveal mt-9 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center lg:justify-start">
-              <Button size="lg" className="h-11 px-7 text-base shadow-sm">
-                预约演示
-                <ArrowRight className="ml-2 size-4" aria-hidden />
-              </Button>
-              <Button
-                variant="outline"
-                size="lg"
-                className="h-11 border-border/80 bg-background/80 px-7 text-base backdrop-blur-sm"
-              >
-                <Play className="mr-2 size-4 shrink-0" aria-hidden />
-                了解产品
-              </Button>
+            <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+              <div className="hero-reveal-cta w-full sm:w-auto">
+                <Button size="lg" className="h-12 rounded-full px-8 text-base">
+                  预约演示
+                  <ArrowRight className="ml-2 size-4" aria-hidden />
+                </Button>
+              </div>
+              <div className="hero-reveal-cta w-full sm:w-auto">
+                <Button
+                  variant="outline"
+                  size="lg"
+                  className="h-12 rounded-full border-border/80 bg-background/70 px-8 text-base backdrop-blur-sm"
+                >
+                  <Play className="mr-2 size-4 shrink-0" aria-hidden />
+                  了解产品
+                </Button>
+              </div>
             </div>
-
-            <p className="hero-reveal mt-4 text-center text-xs text-muted-foreground lg:text-left">
-              企业方案含 SLA 与安全评估支持；也可先安排集成可行性沟通。
-            </p>
           </div>
 
-          {/* Right: layered product canvas */}
-          <div
-            className="relative mx-auto w-full max-w-[420px] lg:mx-0 lg:ml-auto lg:mr-0 lg:max-w-none"
-            style={{ transformStyle: "preserve-3d" }}
-          >
+          <div className="relative lg:col-span-7 lg:col-start-6">
             <div
               ref={glow}
-              className="pointer-events-none absolute -inset-10 rounded-[2rem] bg-linear-to-br from-indigo-500/25 via-violet-500/15 to-sky-500/20 blur-3xl dark:from-indigo-500/20 dark:via-violet-500/12 dark:to-sky-500/15"
+              className="pointer-events-none absolute -inset-12 rounded-[2rem] blur-3xl"
+              style={{
+                background:
+                  "linear-gradient(to bottom right, var(--hero-glow-from), var(--hero-glow-via), var(--hero-glow-to))",
+              }}
               aria-hidden
             />
-
-            {/* Back plate — depth */}
             <div
-              className="pointer-events-none absolute inset-0 translate-x-3 translate-y-4 scale-[0.97] rounded-3xl border border-border/30 bg-muted/40 opacity-70 dark:bg-muted/25"
+              className="pointer-events-none absolute inset-0 translate-x-4 translate-y-6 scale-[0.96] rounded-3xl border border-border/25 bg-muted/35 opacity-80 dark:bg-muted/20"
               aria-hidden
             />
 
             <div
               ref={panel}
-              className="relative will-change-transform [transform-style:preserve-3d]"
+              className="relative -rotate-2 transform-3d will-change-transform lg:-translate-y-4"
+              style={{ transformStyle: "preserve-3d" }}
             >
-              {/* Animated ring */}
               <div
                 className="pointer-events-none absolute -inset-[2px] overflow-hidden rounded-[1.35rem]"
                 aria-hidden
               >
                 <div
                   ref={orbit}
-                  className="absolute left-1/2 top-1/2 size-[140%] -translate-x-1/2 -translate-y-1/2 bg-[conic-gradient(from_0deg,oklch(0.55_0.2_278),oklch(0.62_0.18_300),oklch(0.58_0.16_250),oklch(0.55_0.2_278))] opacity-35 dark:opacity-25"
+                  className="absolute left-1/2 top-1/2 size-[140%] -translate-x-1/2 -translate-y-1/2 opacity-35 dark:opacity-25"
+                  style={{
+                    background:
+                      "conic-gradient(from 0deg, var(--hero-orbit-1), var(--hero-orbit-2), var(--hero-orbit-3), var(--hero-orbit-1))",
+                  }}
                 />
               </div>
 
-              <div className="relative overflow-hidden rounded-[1.25rem] border border-border/60 bg-card/85 shadow-[0_28px_90px_-28px_oklch(0.35_0.1_264/0.35)] backdrop-blur-xl dark:border-white/10 dark:bg-card/50 dark:shadow-[0_28px_90px_-28px_oklch(0_0_0/0.55)]">
-                {/* Window chrome */}
+              <div className="relative overflow-hidden rounded-[1.25rem] border border-border/60 bg-card/90 shadow-[0_28px_90px_-28px_var(--hero-panel-shadow)] backdrop-blur-xl dark:border-white/10 dark:bg-card/55">
                 <div className="flex h-11 items-center gap-2 border-b border-border/50 bg-muted/40 px-4 dark:bg-muted/25">
                   <span className="size-2.5 rounded-full bg-red-400/90" aria-hidden />
                   <span className="size-2.5 rounded-full bg-amber-400/90" aria-hidden />
@@ -250,7 +368,6 @@ export function Hero() {
                 </div>
 
                 <div className="space-y-4 p-4 sm:p-5">
-                  {/* Hero metric + sparkline */}
                   <div className="rounded-2xl border border-border/50 bg-background/70 p-4 dark:bg-background/40">
                     <div className="flex items-start justify-between gap-3">
                       <div>
@@ -271,8 +388,8 @@ export function Hero() {
                     >
                       <defs>
                         <linearGradient id="hero-spark-fill" x1="0" y1="0" x2="0" y2="1">
-                          <stop offset="0%" stopColor="oklch(0.55 0.2 278)" stopOpacity="0.35" />
-                          <stop offset="100%" stopColor="oklch(0.55 0.2 278)" stopOpacity="0" />
+                          <stop offset="0%" stopColor="var(--hero-spark-fill)" stopOpacity="0.35" />
+                          <stop offset="100%" stopColor="var(--hero-spark-fill)" stopOpacity="0" />
                         </linearGradient>
                       </defs>
                       <path
@@ -282,7 +399,7 @@ export function Hero() {
                       <path
                         ref={spark}
                         d="M0 42 L40 38 L72 44 L108 28 L140 34 L176 18 L208 26 L244 12 L280 20"
-                        stroke="oklch(0.52 0.19 278)"
+                        stroke="var(--hero-spark)"
                         strokeWidth="2.25"
                         strokeLinecap="round"
                         strokeLinejoin="round"
@@ -291,7 +408,6 @@ export function Hero() {
                     </svg>
                   </div>
 
-                  {/* Bento row */}
                   <div className="grid grid-cols-2 gap-3">
                     <div className="rounded-2xl border border-border/50 bg-muted/25 p-3 dark:bg-muted/15">
                       <p className="text-[10px] font-medium uppercase tracking-wider text-muted-foreground">
@@ -306,17 +422,21 @@ export function Hero() {
                       </p>
                       <p className="mt-1 text-lg font-semibold text-foreground">复核中</p>
                       <div className="mt-2 flex gap-1">
-                        <span className="h-1 flex-1 rounded-full bg-indigo-500/80" />
-                        <span className="h-1 flex-1 rounded-full bg-indigo-500/35" />
+                        <span className="bg-brand/80 h-1 flex-1 rounded-full" />
+                        <span className="bg-brand/35 h-1 flex-1 rounded-full" />
                         <span className="h-1 flex-1 rounded-full bg-border" />
                       </div>
                     </div>
                   </div>
 
-                  <div className="rounded-xl border border-dashed border-border/70 bg-muted/15 px-3 py-2.5 dark:bg-muted/10">
+                  <div className="space-y-2 rounded-xl border border-dashed border-border/70 bg-muted/15 px-3 py-2.5 dark:bg-muted/10">
                     <p className="font-mono text-[11px] leading-relaxed text-muted-foreground">
-                      <span className="text-indigo-600 dark:text-indigo-400">GET</span>{" "}
-                      /v1/content/pages?locale=zh-CN
+                      <span style={{ color: "var(--hero-mcp-label)" }}>MCP</span>{" "}
+                      tools/publish_post · draft → review
+                    </p>
+                    <p className="font-mono text-[11px] leading-relaxed text-muted-foreground">
+                      <span style={{ color: "var(--hero-api-label)" }}>GET</span>{" "}
+                      /v1/seo/pages/meta?locale=zh-CN
                     </p>
                   </div>
                 </div>

@@ -5,6 +5,13 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
+  /* 与 Hero 同步的品牌色（靛紫主轴 hue ~264–278，辅色偏紫 / 青） */
+  --color-brand: var(--brand);
+  --color-brand-foreground: var(--brand-foreground);
+  --color-brand-muted: var(--brand-muted);
+  --color-brand-accent: var(--brand-accent);
+  --color-brand-cool: var(--brand-cool);
+  --color-brand-amber: var(--brand-amber);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-sans);
@@ -49,14 +56,49 @@
 }
 
 :root {
+  /*
+   * Capybara 营销站主题（与 Hero 一致）
+   * 主色 brand：靛青 oklch L~0.52 C~0.19 h~278
+   * 辅色 accent：紫 oklch h~300；cool：偏青 h~250；amber：MCP 高亮
+   */
+  --brand: oklch(0.52 0.19 278);
+  --brand-foreground: oklch(0.985 0 0);
+  --brand-muted: oklch(0.94 0.04 278);
+  --brand-accent: oklch(0.58 0.18 300);
+  --brand-cool: oklch(0.55 0.14 250);
+  --brand-amber: oklch(0.62 0.17 75);
+  --brand-text-from: oklch(0.45 0.2 278);
+  --brand-text-via: oklch(0.5 0.19 300);
+  --brand-text-to: oklch(0.45 0.2 278);
+
+  --hero-surface: oklch(0.985 0.004 264);
+  --hero-radial-tr: oklch(0.93 0.05 278 / 0.35);
+  --hero-radial-bl: oklch(0.94 0.035 255 / 0.28);
+  --hero-linear-top: oklch(0.995 0.003 264);
+  --hero-linear-bottom: oklch(0.98 0.006 272);
+  --hero-grid-line: oklch(0.55 0.02 264 / 0.07);
+  --hero-vignette: oklch(0.72 0.12 278 / 0.12);
+  --hero-glow-from: oklch(0.55 0.2 278 / 0.25);
+  --hero-glow-via: oklch(0.58 0.18 300 / 0.15);
+  --hero-glow-to: oklch(0.55 0.14 250 / 0.2);
+  --hero-orbit-1: oklch(0.55 0.2 278);
+  --hero-orbit-2: oklch(0.62 0.18 300);
+  --hero-orbit-3: oklch(0.58 0.16 250);
+  --hero-spark: oklch(0.52 0.19 278);
+  --hero-spark-fill: oklch(0.55 0.2 278);
+  --hero-panel-shadow: oklch(0.35 0.1 264 / 0.35);
+  --hero-mcp-label: oklch(0.55 0.17 75);
+  --hero-api-label: oklch(0.48 0.18 278);
+
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
+  /* 与 Hero 品牌色同步的主按钮 / 强调色 */
+  --primary: var(--brand);
+  --primary-foreground: var(--brand-foreground);
   --secondary: oklch(0.97 0 0);
   --secondary-foreground: oklch(0.205 0 0);
   --muted: oklch(0.97 0 0);
@@ -84,14 +126,43 @@
 }
 
 .dark {
+  --brand: oklch(0.72 0.14 278);
+  --brand-foreground: oklch(0.16 0.03 278);
+  --brand-muted: oklch(0.28 0.06 278);
+  --brand-accent: oklch(0.75 0.12 300);
+  --brand-cool: oklch(0.7 0.1 250);
+  --brand-amber: oklch(0.78 0.14 85);
+  --brand-text-from: oklch(0.72 0.14 278);
+  --brand-text-via: oklch(0.76 0.12 300);
+  --brand-text-to: oklch(0.72 0.14 278);
+
+  --hero-surface: oklch(0.16 0.02 264);
+  --hero-radial-tr: oklch(0.28 0.08 278 / 0.35);
+  --hero-radial-bl: oklch(0.26 0.06 255 / 0.3);
+  --hero-linear-top: oklch(0.17 0.022 264);
+  --hero-linear-bottom: oklch(0.145 0.018 272);
+  --hero-grid-line: oklch(0.55 0.02 264 / 0.07);
+  --hero-vignette: oklch(0.45 0.14 278 / 0.18);
+  --hero-glow-from: oklch(0.55 0.2 278 / 0.2);
+  --hero-glow-via: oklch(0.58 0.18 300 / 0.12);
+  --hero-glow-to: oklch(0.55 0.14 250 / 0.15);
+  --hero-orbit-1: oklch(0.55 0.2 278);
+  --hero-orbit-2: oklch(0.62 0.18 300);
+  --hero-orbit-3: oklch(0.58 0.16 250);
+  --hero-spark: oklch(0.68 0.14 278);
+  --hero-spark-fill: oklch(0.55 0.2 278);
+  --hero-panel-shadow: oklch(0 0 0 / 0.55);
+  --hero-mcp-label: oklch(0.78 0.14 85);
+  --hero-api-label: oklch(0.72 0.14 278);
+
   --background: oklch(0.145 0 0);
   --foreground: oklch(0.985 0 0);
   --card: oklch(0.205 0 0);
   --card-foreground: oklch(0.985 0 0);
   --popover: oklch(0.205 0 0);
   --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
+  --primary: var(--brand);
+  --primary-foreground: var(--brand-foreground);
   --secondary: oklch(0.269 0 0);
   --secondary-foreground: oklch(0.985 0 0);
   --muted: oklch(0.269 0 0);
@@ -129,62 +200,163 @@
   }
 }
 
-/* Hero — light enterprise surface (calm base + soft violet/indigo wash) */
+/* 全站可用的品牌渐变字（与 Hero 副标题一致） */
+.text-gradient-brand {
+  background-image: linear-gradient(
+    90deg,
+    var(--brand-text-from),
+    var(--brand-text-via),
+    var(--brand-text-to)
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Hero — 表面色与光晕全部来自 CSS 变量，改一处全局同步 */
 .hero-enterprise,
 .hero-gradient {
-  background-color: oklch(0.985 0.004 264);
+  background-color: var(--hero-surface);
   background-image:
     radial-gradient(
       ellipse 120% 80% at 100% 0%,
-      oklch(0.93 0.05 278 / 0.35),
+      var(--hero-radial-tr),
       transparent 55%
     ),
     radial-gradient(
       ellipse 90% 70% at 0% 100%,
-      oklch(0.94 0.035 255 / 0.28),
+      var(--hero-radial-bl),
       transparent 50%
     ),
     linear-gradient(
       180deg,
-      oklch(0.995 0.003 264) 0%,
-      oklch(0.98 0.006 272) 100%
+      var(--hero-linear-top) 0%,
+      var(--hero-linear-bottom) 100%
     );
 }
 
-.dark .hero-enterprise,
-.dark .hero-gradient {
-  background-color: oklch(0.16 0.02 264);
-  background-image:
-    radial-gradient(
-      ellipse 120% 80% at 100% 0%,
-      oklch(0.28 0.08 278 / 0.35),
-      transparent 55%
-    ),
-    radial-gradient(
-      ellipse 90% 70% at 0% 100%,
-      oklch(0.26 0.06 255 / 0.3),
-      transparent 50%
-    ),
-    linear-gradient(
-      180deg,
-      oklch(0.17 0.022 264) 0%,
-      oklch(0.145 0.018 272) 100%
-    );
-}
-
-/* Subtle gradient for cards — matches hero hue */
+/* 与 Hero 同色相的卡片浅渐变 */
 .gradient-card {
   background: linear-gradient(
     180deg,
-    oklch(0.995 0.002 264) 0%,
-    oklch(0.97 0.012 272) 100%
+    var(--hero-linear-top) 0%,
+    var(--hero-linear-bottom) 100%
   );
 }
 
-.dark .gradient-card {
-  background: linear-gradient(
-    180deg,
-    oklch(0.19 0.02 264) 0%,
-    oklch(0.16 0.025 272) 100%
+/* —— 营销首页：打破「标准 SaaS 栅格」的层次与质感 —— */
+/* 首页：子内容叠在 LandingHeroBackdrop（z-0）之上；噪点层 z-15 仍盖在最上 */
+.landing-hero-canvas {
+  position: relative;
+}
+
+.landing-grain {
+  position: relative;
+}
+.landing-grain::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 15;
+  pointer-events: none;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode: multiply;
+}
+.dark .landing-grain::before {
+  opacity: 0.055;
+  mix-blend-mode: overlay;
+}
+
+/* 巨型描边水印字 */
+.text-mega-watermark {
+  font-size: clamp(4rem, 18vw, 14rem);
+  font-weight: 700;
+  line-height: 0.85;
+  letter-spacing: -0.06em;
+  color: transparent;
+  -webkit-text-stroke: 1px oklch(0.55 0.02 264 / 0.12);
+  text-stroke: 1px oklch(0.55 0.02 264 / 0.12);
+}
+.dark .text-mega-watermark {
+  -webkit-text-stroke: 1px oklch(0.85 0.02 264 / 0.08);
+  text-stroke: 1px oklch(0.85 0.02 264 / 0.08);
+}
+
+/* Hero 底部斜切，衔接下一屏 */
+.hero-slice-bottom {
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 48px), 0 100%);
+}
+@media (min-width: 1024px) {
+  .hero-slice-bottom {
+    clip-path: polygon(0 0, 100% 0, 100% calc(100% - 72px), 0 100%);
+  }
+}
+
+/* 便签外层：仅极轻外晕，主阴影在卡片上 */
+.feat-note-hull {
+  filter: drop-shadow(0 2px 8px oklch(0.35 0.04 264 / 0.08));
+}
+.dark .feat-note-hull {
+  filter: drop-shadow(0 4px 14px oklch(0 0 0 / 0.25));
+}
+
+/* 客户评价：横向无缝弹幕（translate -50% = 一组文案宽度） */
+@keyframes testimonial-marquee-left {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+@keyframes testimonial-marquee-right {
+  from {
+    transform: translateX(-50%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+.testimonial-marquee-track {
+  display: flex;
+  width: max-content;
+  align-items: center;
+  gap: var(--testimonial-gap, 0.875rem);
+}
+
+.testimonial-marquee-left {
+  animation: testimonial-marquee-left var(--testimonial-dur, 42s) linear infinite;
+  will-change: transform;
+}
+
+.testimonial-marquee-right {
+  animation: testimonial-marquee-right var(--testimonial-dur, 42s) linear infinite;
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .testimonial-marquee-left,
+  .testimonial-marquee-right {
+    animation: none !important;
+    transform: none !important;
+  }
+}
+
+.testimonial-danmaku-mask {
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 5%,
+    black 95%,
+    transparent
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 5%,
+    black 95%,
+    transparent
   );
 }

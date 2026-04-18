@@ -128,3 +128,63 @@
     @apply font-sans;
   }
 }
+
+/* Hero — light enterprise surface (calm base + soft violet/indigo wash) */
+.hero-enterprise,
+.hero-gradient {
+  background-color: oklch(0.985 0.004 264);
+  background-image:
+    radial-gradient(
+      ellipse 120% 80% at 100% 0%,
+      oklch(0.93 0.05 278 / 0.35),
+      transparent 55%
+    ),
+    radial-gradient(
+      ellipse 90% 70% at 0% 100%,
+      oklch(0.94 0.035 255 / 0.28),
+      transparent 50%
+    ),
+    linear-gradient(
+      180deg,
+      oklch(0.995 0.003 264) 0%,
+      oklch(0.98 0.006 272) 100%
+    );
+}
+
+.dark .hero-enterprise,
+.dark .hero-gradient {
+  background-color: oklch(0.16 0.02 264);
+  background-image:
+    radial-gradient(
+      ellipse 120% 80% at 100% 0%,
+      oklch(0.28 0.08 278 / 0.35),
+      transparent 55%
+    ),
+    radial-gradient(
+      ellipse 90% 70% at 0% 100%,
+      oklch(0.26 0.06 255 / 0.3),
+      transparent 50%
+    ),
+    linear-gradient(
+      180deg,
+      oklch(0.17 0.022 264) 0%,
+      oklch(0.145 0.018 272) 100%
+    );
+}
+
+/* Subtle gradient for cards — matches hero hue */
+.gradient-card {
+  background: linear-gradient(
+    180deg,
+    oklch(0.995 0.002 264) 0%,
+    oklch(0.97 0.012 272) 100%
+  );
+}
+
+.dark .gradient-card {
+  background: linear-gradient(
+    180deg,
+    oklch(0.19 0.02 264) 0%,
+    oklch(0.16 0.025 272) 100%
+  );
+}

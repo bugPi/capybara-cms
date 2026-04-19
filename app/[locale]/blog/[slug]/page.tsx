@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import { getTranslations } from "next-intl/server";
+import { Link } from "@/i18n/routing";
 import { notFound } from "next/navigation";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
@@ -9,7 +10,7 @@ import { getPostBySlug, getSortedPosts } from "@/lib/blog-posts";
 import { cn } from "@/lib/utils";
 
 interface PageProps {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ locale: string; slug: string }>;
 }
 
 export async function generateStaticParams() {
@@ -18,11 +19,12 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const { slug } = await params;
-  const post = getPostBySlug(slug);
+  const { locale, slug } = await params;
+  const t = await getTranslations({ locale, namespace: "blog" });
+  const post = getPostBySlug(slug, locale);
 
   if (!post) {
-    return { title: "文章未找到" };
+    return { title: t("meta.notFoundTitle") };
   }
 
   return {
@@ -39,9 +41,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   };
 }
 
-function formatDateFull(date: string) {
+function formatDateFull(date: string, locale: string) {
   const d = new Date(date);
-  return d.toLocaleDateString("zh-CN", {
+  return d.toLocaleDateString(locale === "zh" ? "zh-CN" : "en-US", {
     year: "numeric",
     month: "long",
     day: "numeric",
@@ -49,48 +51,101 @@ function formatDateFull(date: string) {
 }
 
 const categoryStyles: Record<string, { text: string; bg: string }> = {
-  MCP: {
+  mcp: {
     text: "text-violet-700 dark:text-violet-300",
     bg: "bg-violet-100 dark:bg-violet-900/30",
   },
-  SEO: {
+  workflow: {
+    text: "text-indigo-700 dark:text-indigo-300",
+    bg: "bg-indigo-100 dark:bg-indigo-900/30",
+  },
+  agents: {
+    text: "text-fuchsia-700 dark:text-fuchsia-300",
+    bg: "bg-fuchsia-100 dark:bg-fuchsia-900/30",
+  },
+  seo: {
     text: "text-cyan-700 dark:text-cyan-300",
     bg: "bg-cyan-100 dark:bg-cyan-900/30",
   },
-  API: {
-    text: "text-blue-700 dark:text-blue-300",
-    bg: "bg-blue-100 dark:bg-blue-900/30",
+  jsonLd: {
+    text: "text-sky-700 dark:text-sky-300",
+    bg: "bg-sky-100 dark:bg-sky-900/30",
   },
-  安全: {
-    text: "text-emerald-700 dark:text-emerald-300",
-    bg: "bg-emerald-100 dark:bg-emerald-900/30",
+  metadata: {
+    text: "text-teal-700 dark:text-teal-300",
+    bg: "bg-teal-100 dark:bg-teal-900/30",
   },
-  迁移: {
+  migration: {
     text: "text-orange-700 dark:text-orange-300",
     bg: "bg-orange-100 dark:bg-orange-900/30",
   },
-  多站点: {
+  implementation: {
+    text: "text-amber-700 dark:text-amber-300",
+    bg: "bg-amber-100 dark:bg-amber-900/30",
+  },
+  script: {
+    text: "text-rose-700 dark:text-rose-300",
+    bg: "bg-rose-100 dark:bg-rose-900/30",
+  },
+  api: {
+    text: "text-blue-700 dark:text-blue-300",
+    bg: "bg-blue-100 dark:bg-blue-900/30",
+  },
+  webhook: {
+    text: "text-violet-700 dark:text-violet-300",
+    bg: "bg-violet-100 dark:bg-violet-900/30",
+  },
+  integration: {
+    text: "text-sky-700 dark:text-sky-300",
+    bg: "bg-sky-100 dark:bg-sky-900/30",
+  },
+  rbac: {
+    text: "text-emerald-700 dark:text-emerald-300",
+    bg: "bg-emerald-100 dark:bg-emerald-900/30",
+  },
+  audit: {
+    text: "text-amber-700 dark:text-amber-300",
+    bg: "bg-amber-100 dark:bg-amber-900/30",
+  },
+  security: {
+    text: "text-emerald-700 dark:text-emerald-300",
+    bg: "bg-emerald-100 dark:bg-emerald-900/30",
+  },
+  multiSite: {
     text: "text-pink-700 dark:text-pink-300",
     bg: "bg-pink-100 dark:bg-pink-900/30",
+  },
+  orchestration: {
+    text: "text-purple-700 dark:text-purple-300",
+    bg: "bg-purple-100 dark:bg-purple-900/30",
+  },
+  reuse: {
+    text: "text-lime-700 dark:text-lime-300",
+    bg: "bg-lime-100 dark:bg-lime-900/30",
   },
 };
 
 export default async function BlogPostPage({ params }: PageProps) {
-  const { slug } = await params;
-  const post = getPostBySlug(slug);
+  const { locale, slug } = await params;
+  const t = await getTranslations({ locale, namespace: "blog" });
+  const post = getPostBySlug(slug, locale);
 
   if (!post) {
     notFound();
   }
 
-  const allPosts = getSortedPosts();
-  const currentIndex = allPosts.findIndex((p) => p.slug === slug);
+  const allPosts = getSortedPosts(locale);
   const relatedPosts = allPosts
-    .filter((p) => p.slug !== slug && p.tags.some((t) => post.tags.includes(t)))
+    .filter(
+      (p) =>
+        p.slug !== slug &&
+        p.tagIds.some((tid) => post.tagIds.includes(tid))
+    )
     .slice(0, 2);
 
+  const primaryTagId = post.tagIds[0];
   const primaryTag = post.tags[0];
-  const style = categoryStyles[primaryTag] || {
+  const style = categoryStyles[primaryTagId] || {
     text: "text-brand",
     bg: "bg-brand/10 dark:bg-brand/20",
   };
@@ -113,7 +168,7 @@ export default async function BlogPostPage({ params }: PageProps) {
             {primaryTag}
           </span>
           <span className="text-sm text-muted-foreground/70">
-            {formatDateFull(post.date)}
+            {formatDateFull(post.date, locale)}
           </span>
         </div>
 
@@ -161,18 +216,19 @@ export default async function BlogPostPage({ params }: PageProps) {
         {/* 标签 */}
         <div className="mt-14 pt-10 border-t border-border/25">
           <div className="flex flex-wrap gap-2">
-            {post.tags.map((tag) => {
-              const tagStyle = categoryStyles[tag] || style;
+            {post.tagIds.map((tagId, i) => {
+              const tagStyle = categoryStyles[tagId] || style;
+              const label = post.tags[i];
               return (
                 <span
-                  key={tag}
+                  key={tagId}
                   className={cn(
                     "inline-flex px-3 py-1.5 rounded text-xs font-medium",
                     tagStyle.bg,
                     tagStyle.text
                   )}
                 >
-                  {tag}
+                  {label}
                 </span>
               );
             })}
@@ -182,11 +238,13 @@ export default async function BlogPostPage({ params }: PageProps) {
         {/* 作者 */}
         <div className="mt-10 flex items-center gap-3">
           <div className="w-10 h-10 rounded-full bg-muted/30 flex items-center justify-center text-sm font-medium text-foreground">
-            {post.author.slice(0, 2)}
+            {post.author.slice(0, 2).toUpperCase()}
           </div>
           <div>
             <p className="text-sm font-medium text-foreground">{post.author}</p>
-            <p className="text-xs text-muted-foreground">Capybara CMS</p>
+            <p className="text-xs text-muted-foreground">
+              {t("post.authorSubtitle")}
+            </p>
           </div>
         </div>
 
@@ -194,11 +252,11 @@ export default async function BlogPostPage({ params }: PageProps) {
         {relatedPosts.length > 0 && (
           <div className="mt-16 pt-12 border-t border-border/25">
             <p className="mb-6 text-xs font-mono tracking-[0.18em] text-muted-foreground/50 uppercase">
-              相关阅读
+              {t("post.relatedReading")}
             </p>
             <div className="grid gap-8 sm:grid-cols-2">
               {relatedPosts.map((related) => {
-                const relStyle = categoryStyles[related.tags[0]] || style;
+                const relStyle = categoryStyles[related.tagIds[0]] || style;
                 return (
                   <Link
                     key={related.slug}
@@ -230,7 +288,7 @@ export default async function BlogPostPage({ params }: PageProps) {
             href="/blog"
             className="text-sm font-medium text-muted-foreground hover:text-brand transition-colors"
           >
-            查看所有文章 →
+            {t("post.backToAll")}
           </Link>
         </div>
       </div>

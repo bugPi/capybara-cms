@@ -270,6 +270,34 @@
       }
     ]
   },
+  "blog": {
+    "filter": {
+      "all": "全部"
+    },
+    "a11y": {
+      "scrollLeft": "向左滚动分类",
+      "scrollRight": "向右滚动分类",
+      "listView": "列表视图",
+      "gridView": "卡片视图"
+    },
+    "empty": {
+      "noPostsTitle": "暂无文章",
+      "noPostsDescription": "这里还没有发布内容，请稍后再来查看。",
+      "filteredTitle": "没有找到文章",
+      "filteredDescription": "当前筛选条件下没有文章，可尝试查看全部或更换分类。",
+      "clearFilter": "查看全部"
+    },
+    "post": {
+      "relatedReading": "相关阅读",
+      "backToAll": "查看所有文章 →",
+      "authorSubtitle": "Capybara CMS"
+    },
+    "meta": {
+      "indexTitle": "博客",
+      "indexDescription": "文章、观点与产品更新。",
+      "notFoundTitle": "文章未找到"
+    }
+  },
   "footer": {
     "tagline": "从草稿到上线，每一跳都留痕。编辑、工程与智能体同一节拍的内容中台。",
     "product": {

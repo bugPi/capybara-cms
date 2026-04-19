@@ -270,6 +270,34 @@
       }
     ]
   },
+  "blog": {
+    "filter": {
+      "all": "All"
+    },
+    "a11y": {
+      "scrollLeft": "Scroll categories left",
+      "scrollRight": "Scroll categories right",
+      "listView": "List view",
+      "gridView": "Grid view"
+    },
+    "empty": {
+      "noPostsTitle": "No posts yet",
+      "noPostsDescription": "There is nothing published here yet. Check back soon.",
+      "filteredTitle": "No matching posts",
+      "filteredDescription": "No articles match the current filters. Try viewing all posts or pick another category.",
+      "clearFilter": "View all"
+    },
+    "post": {
+      "relatedReading": "Related reading",
+      "backToAll": "View all posts →",
+      "authorSubtitle": "Capybara CMS"
+    },
+    "meta": {
+      "indexTitle": "Blog",
+      "indexDescription": "Articles, perspectives, and product updates.",
+      "notFoundTitle": "Post not found"
+    }
+  },
   "footer": {
     "tagline": "From draft to live, every step tracked. Editors, engineers, and agents—all on the same beat.",
     "product": {

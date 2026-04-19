@@ -1,5 +1,6 @@
 "use client";
 
+import { useRef } from "react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -8,16 +9,36 @@ import {
   FieldDescription,
   FieldGroup,
   FieldLabel,
+  FieldSeparator,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
+
+/** 演示账号（仅用于体验；接入真实鉴权后改为服务端校验或移除） */
+export const DEMO_EMAIL = "demo@capybara-cms.local";
+export const DEMO_PASSWORD = "demo";
 
 export function LoginForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
+  const formRef = useRef<HTMLFormElement>(null);
+  const emailRef = useRef<HTMLInputElement>(null);
+  const passwordRef = useRef<HTMLInputElement>(null);
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    // TODO: 接入真实登录 API
+  };
+
+  const handleDemoLogin = () => {
+    if (emailRef.current) emailRef.current.value = DEMO_EMAIL;
+    if (passwordRef.current) passwordRef.current.value = DEMO_PASSWORD;
+    formRef.current?.requestSubmit();
+  };
+
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
-      <form>
+      <form ref={formRef} onSubmit={handleSubmit}>
         <FieldGroup>
           <div className="flex flex-col items-center gap-3 text-center">
             <Link
@@ -49,9 +70,12 @@ export function LoginForm({
           <Field>
             <FieldLabel htmlFor="email">邮箱</FieldLabel>
             <Input
+              ref={emailRef}
               id="email"
+              name="email"
               type="email"
               placeholder="name@example.com"
+              autoComplete="email"
               required
               className="h-9 px-3 text-sm md:text-sm"
             />
@@ -59,9 +83,12 @@ export function LoginForm({
           <Field>
             <FieldLabel htmlFor="password">密码</FieldLabel>
             <Input
+              ref={passwordRef}
               id="password"
+              name="password"
               type="password"
               placeholder="输入密码"
+              autoComplete="current-password"
               required
               className="h-9 px-3 text-sm md:text-sm"
             />
@@ -69,6 +96,18 @@ export function LoginForm({
           <Field>
             <Button type="submit" size="lg" className="w-full">
               登录
+            </Button>
+          </Field>
+          <FieldSeparator>or</FieldSeparator>
+          <Field>
+            <Button
+              type="button"
+              variant="outline"
+              size="lg"
+              className="w-full"
+              onClick={handleDemoLogin}
+            >
+              演示账号登录
             </Button>
           </Field>
         </FieldGroup>

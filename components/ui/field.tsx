@@ -150,27 +150,42 @@ function FieldSeparator({
 }: React.ComponentProps<"div"> & {
   children?: React.ReactNode
 }) {
+  if (children) {
+    return (
+      <div
+        data-slot="field-separator"
+        data-content={true}
+        className={cn(
+          "-my-2 flex h-5 items-center gap-3 text-sm group-data-[variant=outline]/field-group:-mb-2",
+          className
+        )}
+        {...props}
+      >
+        <Separator className="flex-1" />
+        <span
+          className="shrink-0 px-0.5 text-muted-foreground"
+          data-slot="field-separator-content"
+        >
+          {children}
+        </span>
+        <Separator className="flex-1" />
+      </div>
+    );
+  }
+
   return (
     <div
       data-slot="field-separator"
-      data-content={!!children}
+      data-content={false}
       className={cn(
-        "relative -my-2 h-5 text-sm group-data-[variant=outline]/field-group:-mb-2",
+        "relative -my-2 h-5 group-data-[variant=outline]/field-group:-mb-2",
         className
       )}
       {...props}
     >
       <Separator className="absolute inset-0 top-1/2" />
-      {children && (
-        <span
-          className="relative mx-auto block w-fit bg-background px-2 text-muted-foreground"
-          data-slot="field-separator-content"
-        >
-          {children}
-        </span>
-      )}
     </div>
-  )
+  );
 }
 
 function FieldError({

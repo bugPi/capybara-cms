@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import rehypeHighlight from "rehype-highlight";
+import "highlight.js/styles/github-dark.css";
 import { getPostBySlug, getSortedPosts } from "@/lib/blog-posts";
 import { cn } from "@/lib/utils";
 
@@ -96,7 +100,7 @@ export default async function BlogPostPage({ params }: PageProps) {
       {/* 顶部装饰线 */}
       <div className="h-px bg-border/30" aria-hidden />
 
-      <div className="relative mx-auto w-full max-w-3xl px-5 sm:px-8 lg:px-10 pt-16 pb-24 lg:pt-20 lg:pb-32">
+      <div className="relative mx-auto w-full max-w-5xl px-5 sm:px-8 lg:px-14 pt-16 pb-24 lg:pt-20 lg:pb-32">
         {/* 元信息 */}
         <div className="mb-10 flex items-center gap-3">
           <span
@@ -119,14 +123,14 @@ export default async function BlogPostPage({ params }: PageProps) {
         </h1>
 
         {/* 摘要 */}
-        <p className="mt-6 text-lg text-muted-foreground leading-relaxed max-w-2xl">
+        <p className="mt-6 text-lg text-muted-foreground leading-relaxed">
           {post.excerpt}
         </p>
 
         {/* 分隔线 */}
         <div className="mt-12 mb-12 h-px bg-border/30" aria-hidden />
 
-        {/* 正文 */}
+        {/* 正文 - Markdown 渲染 */}
         <div
           className={cn(
             "prose prose-stone dark:prose-invert max-w-none",
@@ -142,36 +146,16 @@ export default async function BlogPostPage({ params }: PageProps) {
             "prose-ul:my-6 prose-ol:my-6 prose-ul:pl-4 prose-ol:pl-4",
             "prose-li:text-foreground/85 prose-li:leading-relaxed prose-li:my-1.5",
             "prose-blockquote:not-italic prose-blockquote:text-foreground/80 prose-blockquote:border-l-brand/30 prose-blockquote:pl-6 prose-blockquote:my-8",
-            "prose-img:rounded-xl prose-img:border prose-img:border-border/30"
+            "prose-img:rounded-xl prose-img:border prose-img:border-border/30",
+            "prose-table:border-collapse prose-th:border prose-th:border-border/30 prose-th:px-3 prose-th:py-2 prose-td:border prose-td:border-border/30 prose-td:px-3 prose-td:py-2"
           )}
         >
-          {post.content.split("\n").map((paragraph, i) => {
-            if (paragraph.startsWith("## ")) {
-              return (
-                <h2 key={i} id={paragraph.slice(3).toLowerCase().replace(/\s+/g, "-")}>
-                  {paragraph.slice(3)}
-                </h2>
-              );
-            }
-            if (paragraph.startsWith("### ")) {
-              return (
-                <h3 key={i} id={paragraph.slice(4).toLowerCase().replace(/\s+/g, "-")}>
-                  {paragraph.slice(4)}
-                </h3>
-              );
-            }
-            if (paragraph.startsWith("- ")) {
-              return (
-                <ul key={i}>
-                  <li>{paragraph.slice(2)}</li>
-                </ul>
-              );
-            }
-            if (paragraph.trim() === "") {
-              return null;
-            }
-            return <p key={i}>{paragraph}</p>;
-          })}
+          <ReactMarkdown
+            remarkPlugins={[remarkGfm]}
+            rehypePlugins={[rehypeHighlight]}
+          >
+            {post.content}
+          </ReactMarkdown>
         </div>
 
         {/* 标签 */}

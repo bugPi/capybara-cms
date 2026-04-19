@@ -17,6 +17,8 @@ const footerLinks = {
   ],
   company: [
     { href: "/about", label: "关于" },
+    { href: "/privacy", label: "隐私政策" },
+    { href: "/terms", label: "服务条款" },
   ],
 };
 

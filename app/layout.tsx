@@ -1,10 +1,9 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { Header } from "@/components/layout/header";
-import { Footer } from "@/components/layout/footer";
 import { GsapProvider } from "@/components/providers/gsap-provider";
 import { ThemeProvider } from "@/components/providers/theme-provider";
+import { TooltipProvider } from "@/components/ui/tooltip";
 import { getSiteUrl } from "@/lib/site";
 
 const geistSans = Geist({
@@ -80,9 +79,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <GsapProvider>
-            <Header />
-            <main className="flex-1 pt-16">{children}</main>
-            <Footer />
+            <TooltipProvider delayDuration={200}>{children}</TooltipProvider>
           </GsapProvider>
         </ThemeProvider>
       </body>

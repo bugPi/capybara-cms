@@ -36,7 +36,7 @@ export function Header() {
       className={cn(
         "fixed left-0 right-0 top-0 z-50 transition-all duration-300",
         scrolled
-          ? "bg-transparent backdrop-blur-md"
+          ? "bg-transparent backdrop-blur-sm"
           : "bg-transparent"
       )}
     >
@@ -76,7 +76,7 @@ export function Header() {
                 aria-current={active ? "page" : undefined}
                 className={
                   active
-                    ? "px-4 py-2 text-sm font-medium text-foreground"
+                    ? "px-4 py-2 text-sm font-medium text-brand"
                     : "px-4 py-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
                 }
               >
@@ -89,11 +89,8 @@ export function Header() {
         {/* 右侧按钮 */}
         <div className="flex items-center gap-3">
           <ThemeToggle />
-          <Button
-            size="sm"
-            className="h-8 px-4 text-sm rounded-full"
-          >
-            登录
+          <Button asChild size="sm" className="h-8 px-4 text-sm rounded-full">
+            <Link href="/login">登录</Link>
           </Button>
         </div>
       </nav>

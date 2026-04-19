@@ -1,6 +1,6 @@
 /**
- * 与 Hero 同套表面渐变、72px 网格、暗角与三色柔光；fixed 铺满视口，滚动时整页共享首屏氛围。
- * 仅由首页包裹使用。
+ * 与 Hero 同套表面渐变、72px 网格、暗角与三色柔光；fixed 铺满视口。
+ * 用于营销首页、登录等需同一品牌氛围的全屏背景。
  */
 export function LandingHeroBackdrop() {
   return (

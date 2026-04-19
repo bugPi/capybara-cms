@@ -165,8 +165,8 @@ export function Features() {
             });
             inner &&
               gsap.to(inner, {
-                rotateX: 0,
-                rotateY: 0,
+                rotationX: 0,
+                rotationY: 0,
                 z: 0,
                 duration: 0.5,
                 ease: "power3.out",
@@ -177,11 +177,11 @@ export function Features() {
           let ryTo: ReturnType<typeof gsap.quickTo> | null = null;
           if (inner) {
             gsap.set(inner, { transformOrigin: "50% 50%", force3D: true });
-            rxTo = gsap.quickTo(inner, "rotateX", {
+            rxTo = gsap.quickTo(inner, "rotationX", {
               duration: 0.45,
               ease: "power3",
             });
-            ryTo = gsap.quickTo(inner, "rotateY", {
+            ryTo = gsap.quickTo(inner, "rotationY", {
               duration: 0.45,
               ease: "power3",
             });

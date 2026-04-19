@@ -100,7 +100,7 @@ export default async function BlogPostPage({ params }: PageProps) {
       {/* 顶部装饰线 */}
       <div className="h-px bg-border/30" aria-hidden />
 
-      <div className="relative mx-auto w-full max-w-5xl px-5 sm:px-8 lg:px-14 pt-16 pb-24 lg:pt-20 lg:pb-32">
+      <div className="relative mx-auto w-full max-w-[min(100%,82rem)] px-5 sm:px-8 lg:px-14 pt-16 pb-24 lg:pt-20 lg:pb-32">
         {/* 元信息 */}
         <div className="mb-10 flex items-center gap-3">
           <span

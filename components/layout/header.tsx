@@ -2,7 +2,10 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
+import { ThemeToggle } from "@/components/layout/theme-toggle";
+import { cn } from "@/lib/utils";
 
 const navLinks = [
   { href: "/", label: "首页" },
@@ -17,9 +20,26 @@ function navLinkActive(pathname: string, href: string) {
 
 export function Header() {
   const pathname = usePathname();
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 10);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
-    <header className="fixed left-0 right-0 top-0 z-50 bg-transparent">
+    <header
+      className={cn(
+        "fixed left-0 right-0 top-0 z-50 transition-all duration-300",
+        scrolled
+          ? "bg-transparent backdrop-blur-md"
+          : "bg-transparent"
+      )}
+    >
       <nav
         className="mx-auto flex h-14 max-w-[min(100%,82rem)] items-center justify-between px-5 sm:px-8 lg:px-14"
         aria-label="主导航"
@@ -68,18 +88,12 @@ export function Header() {
 
         {/* 右侧按钮 */}
         <div className="flex items-center gap-3">
-          <Button
-            variant="ghost"
-            size="sm"
-            className="hidden sm:inline-flex h-8 px-3 text-sm"
-          >
-            登录
-          </Button>
+          <ThemeToggle />
           <Button
             size="sm"
             className="h-8 px-4 text-sm rounded-full"
           >
-            开始使用
+            登录
           </Button>
         </div>
       </nav>

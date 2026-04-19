@@ -4,6 +4,7 @@ import "./globals.css";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { GsapProvider } from "@/components/providers/gsap-provider";
+import { ThemeProvider } from "@/components/providers/theme-provider";
 import { getSiteUrl } from "@/lib/site";
 
 const geistSans = Geist({
@@ -69,13 +70,21 @@ export default function RootLayout({
     <html
       lang="zh"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      suppressHydrationWarning
     >
       <body className="flex min-h-full flex-col overflow-x-hidden">
-        <GsapProvider>
-          <Header />
-          <main className="flex-1 pt-16">{children}</main>
-          <Footer />
-        </GsapProvider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <GsapProvider>
+            <Header />
+            <main className="flex-1 pt-16">{children}</main>
+            <Footer />
+          </GsapProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

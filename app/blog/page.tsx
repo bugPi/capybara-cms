@@ -304,7 +304,7 @@ export default function BlogPage() {
       ref={sectionRef}
       className="relative scroll-mt-24 bg-transparent"
     >
-      <div className="relative mx-auto w-full max-w-5xl px-5 sm:px-8 lg:px-14 py-24 lg:py-32">
+      <div className="relative mx-auto w-full max-w-[min(100%,82rem)] px-5 sm:px-8 lg:px-14 py-24 lg:py-32">
         {/* 分类筛选 + 视图切换 */}
         <CategoryFilter
           categories={categories}

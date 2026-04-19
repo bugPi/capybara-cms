@@ -125,17 +125,6 @@ export function Hero() {
             "-=0.65"
           );
 
-        gsap.to(".hero-parallax-grid", {
-          y: 120,
-          ease: "none",
-          scrollTrigger: {
-            trigger: el,
-            start: "top top",
-            end: "bottom top",
-            scrub: 0.85,
-          },
-        });
-
         gsap.to(".hero-watermark", {
           xPercent: -12,
           ease: "none",
@@ -157,30 +146,6 @@ export function Hero() {
             end: "bottom top",
             scrub: 0.7,
           },
-        });
-
-        gsap.to(".hero-float-a", {
-          y: "+=22",
-          x: "+=10",
-          duration: 4.8,
-          repeat: -1,
-          yoyo: true,
-          ease: "sine.inOut",
-        });
-        gsap.to(".hero-float-b", {
-          y: "-=20",
-          x: "-=14",
-          duration: 6.2,
-          repeat: -1,
-          yoyo: true,
-          ease: "sine.inOut",
-        });
-        gsap.to(".hero-float-c", {
-          scale: 1.06,
-          duration: 3.4,
-          repeat: -1,
-          yoyo: true,
-          ease: "sine.inOut",
         });
       });
 

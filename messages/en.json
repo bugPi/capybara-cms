@@ -1,0 +1,293 @@
+{
+  "nav": {
+    "home": "Home",
+    "blog": "Blog",
+    "about": "About",
+    "login": "Login",
+    "console": "Console",
+    "mainNav": "Main navigation",
+    "switchLanguage": "Switch language"
+  },
+  "theme": {
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System"
+  },
+  "language": {
+    "zh": "中文",
+    "en": "English"
+  },
+  "hero": {
+    "watermark": "CONTENT",
+    "eyebrow": "Enterprise Content · As reliable as a train schedule",
+    "title1": "From draft to live,",
+    "title2": "every step is tracked",
+    "description": "Editors publish, engineers connect APIs, agents pass through gates—all on the same beat, no one misses a step.",
+    "cta": "Book a Demo",
+    "learnMore": "Learn More",
+    "highlights": {
+      "governance": "Governance & Compliance",
+      "api": "API First",
+      "mcp": "MCP Blog Publishing",
+      "seo": "SEO Ready",
+      "multiSite": "Multi-site Orchestration"
+    },
+    "panel": {
+      "windowTitle": "capybara-cms / production",
+      "weeklyPublish": "Weekly Publish",
+      "apiP95": "API p95",
+      "edgeNode": "Edge Node",
+      "workflow": "Workflow",
+      "reviewing": "Reviewing",
+      "apiLineSuffix": "/v1/seo/pages/meta?locale="
+    }
+  },
+  "features": {
+    "title": "Nine Capabilities, One per Block",
+    "description": "MCP blog publishing, SEO, editor, collaboration & approval, multi-channel publishing, REST/Webhook, reading insights, performance & edge, plus security & deployment—each handles its own slice. Read as needed, no \"all-in-one manual\" overload.",
+    "mcp": {
+      "title": "MCP Blog Publishing",
+      "description": "Agents work within guardrails: draft, review, schedule, publish—with every footprint logged."
+    },
+    "seo": {
+      "title": "SEO Full Chain",
+      "description": "Title, URL, OG, sitemap & JSON-LD—like putting every page in a uniform."
+    },
+    "editor": {
+      "title": "Smart Editor",
+      "description": "Markdown, rich text, code blocks all in one pot—same pen for internal and external."
+    },
+    "collaboration": {
+      "title": "Collaboration & Approval",
+      "description": "Who touched which paragraph? System remembers better than people—comments, tasks, permissions down to the paragraph."
+    },
+    "multiChannel": {
+      "title": "Multi-channel Publishing",
+      "description": "Model once, publish everywhere—Web/App, social platforms each pick their slice. Five fewer backend edits."
+    },
+    "security": {
+      "title": "Security & Deployment",
+      "description": "Encryption, permissions, audit logs built in; cloud or on-premise, compliance-ready."
+    },
+    "api": {
+      "title": "REST & Webhook",
+      "description": "Content & workflow programmable; events feed into tickets, IM, or CI—no black box."
+    },
+    "analytics": {
+      "title": "Reading & Conversion Insights",
+      "description": "Impressions, dwell time, conversion mapped back to sections—next quarter's topics less guesswork."
+    },
+    "performance": {
+      "title": "Performance & Edge",
+      "description": "Static + CDN, cache & invalidation tuned per environment—loads steadier."
+    }
+  },
+  "valueStrip": {
+    "kicker": "Product thesis",
+    "title": "Built for content in production—not another shelfware admin",
+    "subtitle": "These three are problems Capybara CMS actually solves: models & APIs, process & audit, agents & SEO—aligned with the nine capability blocks below.",
+    "items": [
+      {
+        "title": "Structured content & APIs",
+        "description": "One content model, REST & Webhooks—sites and business systems share the same contract, fewer one-off integrations."
+      },
+      {
+        "title": "Traceable publishing",
+        "description": "Approval, versions, permissions down to the paragraph—who changed what and when is on record, not buried in chat."
+      },
+      {
+        "title": "MCP & SEO as one",
+        "description": "Agents participate in drafting & publishing within tool permissions; metadata, sitemaps & structured data travel with content—fewer last-minute gaps."
+      }
+    ]
+  },
+  "marquee": {
+    "tags": [
+      "MCP",
+      "Model Context Protocol",
+      "Headless",
+      "REST & Webhook",
+      "SEO / JSON-LD",
+      "Workflow & approval",
+      "Multi-site orchestration",
+      "API first",
+      "Agents inside the gate",
+      "Governance & audit",
+      "On-premise deployment",
+      "Edge cache",
+      "Every step tracked"
+    ]
+  },
+  "pricing": {
+    "kicker": "Pricing",
+    "title": "Pricing follows your reality—not a fake one-size number",
+    "subtitle": "Seats, sites, compliance, deployment—change one variable and the math shifts. Switch tiers below to see copy follow.",
+    "recommended": "Recommended",
+    "contactSales": "Contact sales",
+    "ctaFootnote": "We quote after the conversation · No cold PDF dumps",
+    "ariaTabList": "Choose a plan",
+    "tiers": [
+      {
+        "name": "Team",
+        "blurb": "Get your squad moving—faster than another slide deck",
+        "priceLabel": "Per-seat billing",
+        "highlight": false,
+        "features": [
+          "Structured content & visual editing",
+          "Workflows & basic approvals",
+          "REST API & Webhooks",
+          "SEO metadata & sitemap",
+          "Email support"
+        ]
+      },
+      {
+        "name": "Enterprise",
+        "blurb": "You need an SLA—and a human who answers",
+        "priceLabel": "Custom quote",
+        "highlight": true,
+        "features": [
+          "Everything in Team",
+          "SSO / SAML, OIDC roadmap",
+          "Fine-grained RBAC & audit logs",
+          "Multi-env, multi-region & SLA options",
+          "Dedicated CS & technical support"
+        ]
+      },
+      {
+        "name": "Private / On-prem",
+        "blurb": "Data stays home; the network is yours",
+        "priceLabel": "Sized to deployment",
+        "highlight": false,
+        "features": [
+          "Deploy in your VPC / dedicated cloud",
+          "Air-gapped & offline updates (discussable)",
+          "Integrate with IdP, logging & monitoring",
+          "Security review & pen-test collaboration",
+          "On-site or remote implementation"
+        ]
+      }
+    ]
+  },
+  "testimonials": {
+    "kicker": "Testimonials",
+    "title": "What they said—scrolling by",
+    "subtitle": "Four lanes, slightly different speeds and directions. With “reduce motion” on, we show a static list instead.",
+    "rowA": [
+      {
+        "quote": "Once approvals lined up with MCP tools, ops barely had to learn a new console.",
+        "who": "Li",
+        "hint": "Growth lead · Consumer brand"
+      },
+      {
+        "quote": "Multi-site SEO templates in one place—we could finally ship faster.",
+        "who": "Chen",
+        "hint": "Marketing tech · B2B SaaS"
+      },
+      {
+        "quote": "Audit logs trace every hop—compliance reviews dropped whole rounds of back-and-forth.",
+        "who": "Zhao",
+        "hint": "Security architect · Fintech"
+      }
+    ],
+    "rowB": [
+      {
+        "quote": "Headless plus governance gates—agents only do what they are allowed to.",
+        "who": "Zhou",
+        "hint": "Platform engineering · Internet"
+      },
+      {
+        "quote": "Private deployment followed our network zones; data residency is in the contract.",
+        "who": "Wu",
+        "hint": "IT director · Manufacturing"
+      },
+      {
+        "quote": "JSON-LD & sitemap generation automated—search team was thrilled.",
+        "who": "Zheng",
+        "hint": "SEO lead · Education"
+      }
+    ],
+    "rowC": [
+      {
+        "quote": "Scripted imports for parallel migration felt safer than a big-bang cutover.",
+        "who": "Sun",
+        "hint": "Engineering manager · Media"
+      },
+      {
+        "quote": "Webhooks into our ticket system—publishing became a traceable pipeline.",
+        "who": "Ma",
+        "hint": "DevOps · E-commerce"
+      },
+      {
+        "quote": "We proved POC in a sandbox, then scaled to prod—low decision cost.",
+        "who": "Zhu",
+        "hint": "Product lead · Health IT"
+      }
+    ],
+    "rowD": [
+      {
+        "quote": "Channel coverage & env vars—no more copy-pasting ten configs.",
+        "who": "Hu",
+        "hint": "Frontend lead · Mobility"
+      },
+      {
+        "quote": "In demos we pull the MCP toolchain—customers can see governance.",
+        "who": "Lin",
+        "hint": "Solutions architect · Cloud vendor"
+      },
+      {
+        "quote": "One model for locales & canonical URLs—fewer fights between regional sites.",
+        "who": "Luo",
+        "hint": "Internationalization · Hardware brand"
+      }
+    ]
+  },
+  "faq": {
+    "kicker": "FAQ",
+    "title": "Questions we hear before you buy",
+    "subtitle": "Pick a question on the left, read the full answer on the right; on mobile it stacks. Arrow keys switch questions.",
+    "ariaQuestions": "FAQ questions, select one to read the answer",
+    "answerLabel": "Answer",
+    "items": [
+      {
+        "q": "How is MCP different from calling the API directly?",
+        "a": "APIs are for system integration and automation scripts. MCP wraps steps like draft, submit for review, and schedule publish as tools for agent workflows—permissions and audit rules stay the same; governance is not bypassed."
+      },
+      {
+        "q": "What does SEO include?",
+        "a": "Title & description templates, canonical URLs, Open Graph / Twitter Card, sitemap & JSON-LD, and more—overridable by channel and environment so multi-site maintenance stays sane."
+      },
+      {
+        "q": "Do you support on-premise? Can data stay in-country?",
+        "a": "Yes—private or dedicated cloud, aligned with your network and security policies. Data residency and compliance should be confirmed in writing during pre-sales."
+      },
+      {
+        "q": "How do we migrate alongside an existing CMS?",
+        "a": "Usually phased by content model and URL strategy: sync critical sections in parallel, then switch traffic and 301s—with scripted imports and dual-write validation to avoid a risky big bang."
+      },
+      {
+        "q": "How do we get a trial or POC?",
+        "a": "Use Contact sales or the About page—share team size, number of sites, and compliance needs. We can arrange a demo, sandbox, or a scoped POC."
+      }
+    ]
+  },
+  "footer": {
+    "tagline": "From draft to live, every step tracked. Editors, engineers, and agents—all on the same beat.",
+    "product": {
+      "title": "Product",
+      "features": "Features",
+      "pricing": "Pricing"
+    },
+    "resources": {
+      "title": "Resources",
+      "blog": "Blog",
+      "faq": "FAQ"
+    },
+    "company": {
+      "title": "Company",
+      "about": "About",
+      "privacy": "Privacy Policy",
+      "terms": "Terms of Service"
+    },
+    "copyright": "© 2026 Capybara CMS"
+  }
+}

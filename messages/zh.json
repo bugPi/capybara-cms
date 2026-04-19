@@ -1,0 +1,293 @@
+{
+  "nav": {
+    "home": "首页",
+    "blog": "博客",
+    "about": "关于",
+    "login": "登录",
+    "console": "控制面板",
+    "mainNav": "主导航",
+    "switchLanguage": "切换语言"
+  },
+  "theme": {
+    "light": "浅色",
+    "dark": "深色",
+    "system": "系统"
+  },
+  "language": {
+    "zh": "中文",
+    "en": "English"
+  },
+  "hero": {
+    "watermark": "CONTENT",
+    "eyebrow": "企业内容 · 像列车时刻表一样准",
+    "title1": "从草稿到上线，",
+    "title2": "每一跳都留痕",
+    "description": "编辑点发布，工程接 API，智能体过闸机——同一套节拍，谁也不掉拍。",
+    "cta": "预约演示",
+    "learnMore": "了解产品",
+    "highlights": {
+      "governance": "治理与合规",
+      "api": "API 优先",
+      "mcp": "MCP 发博客",
+      "seo": "SEO 就绪",
+      "multiSite": "多站点编排"
+    },
+    "panel": {
+      "windowTitle": "capybara-cms / production",
+      "weeklyPublish": "本周发布",
+      "apiP95": "API p95",
+      "edgeNode": "边缘节点",
+      "workflow": "工作流",
+      "reviewing": "复核中",
+      "apiLineSuffix": "/v1/seo/pages/meta?locale="
+    }
+  },
+  "features": {
+    "title": "九块能力，一块一事",
+    "description": "MCP 发博客、SEO、编辑器、协作与审批、多渠道发布、REST/Webhook、阅读洞见、性能边缘，再加安全与部署——各管一摊，按需跳读，不堆成一篇「全能说明书」。",
+    "mcp": {
+      "title": "MCP 发博客",
+      "description": "智能体在围栏里干活：起草、过审、定时发，脚印全留着。"
+    },
+    "seo": {
+      "title": "SEO 全链路",
+      "description": "标题、URL、OG、站点地图与 JSON-LD——像给页面穿上统一制服。"
+    },
+    "editor": {
+      "title": "智能编辑器",
+      "description": "Markdown、富文本、代码块一锅端——对内对外同一支笔。"
+    },
+    "collaboration": {
+      "title": "协作与审批",
+      "description": "谁动哪一段，系统记得比人清楚——批注、任务、权限到段落。"
+    },
+    "multiChannel": {
+      "title": "多渠道发布",
+      "description": "一篇稿子建一次模，Web / App、公众号各自取用，少改五遍后台。"
+    },
+    "security": {
+      "title": "安全与部署",
+      "description": "加密、权限、审计打底；云上或私有化，按合规来。"
+    },
+    "api": {
+      "title": "REST 与 Webhook",
+      "description": "内容与流程可编程；事件进工单、IM 或 CI，不另造黑箱。"
+    },
+    "analytics": {
+      "title": "阅读与转化洞见",
+      "description": "曝光、停留、转化贴回栏目——下一季选题少拍脑袋。"
+    },
+    "performance": {
+      "title": "性能与边缘",
+      "description": "静态 + CDN，缓存与失效按环境调，打开更稳。"
+    }
+  },
+  "valueStrip": {
+    "kicker": "产品主张",
+    "title": "为「内容进生产」而造，不是另一套摆设后台",
+    "subtitle": "下面三条都是 Capybara CMS 实际在解决的问题：模型与接口、流程与审计、智能体与 SEO——和下面九块能力里的各条相呼应。",
+    "items": [
+      {
+        "title": "结构化内容与 API",
+        "description": "统一内容模型、REST 与 Webhook，站点和业务系统共用一套契约，少做重复对接。"
+      },
+      {
+        "title": "发布流程可追溯",
+        "description": "审批、版本、权限能落到段落；谁在什么时间改了什么，有据可查，不靠群聊兜底。"
+      },
+      {
+        "title": "MCP 与 SEO 原生一体",
+        "description": "智能体按工具在权限内参与起草与发布；元数据、站点地图与结构化数据跟着内容走，少临上线补洞。"
+      }
+    ]
+  },
+  "marquee": {
+    "tags": [
+      "MCP",
+      "Model Context Protocol",
+      "Headless",
+      "REST & Webhook",
+      "SEO / JSON-LD",
+      "工作流与审批",
+      "多站点编排",
+      "API 优先",
+      "闸口内的智能体",
+      "治理与审计",
+      "私有化部署",
+      "边缘缓存",
+      "每一跳留痕"
+    ]
+  },
+  "pricing": {
+    "kicker": "定价 · Pricing",
+    "title": "价签跟着现状走，不靠官网装统一价",
+    "subtitle": "席位、站点、合规、部署——差一格拼图，数字就变。点下面一栏换档位，看内容与说明怎么跟过来。",
+    "recommended": "推荐",
+    "contactSales": "联系销售",
+    "ctaFootnote": "聊完现状再报价 · 不塞冷冰冰的 PDF",
+    "ariaTabList": "选择方案",
+    "tiers": [
+      {
+        "name": "团队版",
+        "blurb": "小队先跑起来，快过写 PPT",
+        "priceLabel": "按席位数计费",
+        "highlight": false,
+        "features": [
+          "结构化内容与可视化编辑",
+          "工作流与基础审批",
+          "REST API 与 Webhook",
+          "SEO 元数据与站点地图",
+          "邮件支持"
+        ]
+      },
+      {
+        "name": "企业版",
+        "blurb": "要 SLA，也要找得到人",
+        "priceLabel": "定制报价",
+        "highlight": true,
+        "features": [
+          "团队版全部能力",
+          "SSO / SAML、OIDC 路线",
+          "细粒度 RBAC 与审计日志",
+          "多环境、多区域与 SLA 选项",
+          "专属客户成功与技术支持"
+        ]
+      },
+      {
+        "name": "私有化",
+        "blurb": "数据住家里，网络听你的",
+        "priceLabel": "按部署规模评估",
+        "highlight": false,
+        "features": [
+          "可部署于自有 VPC / 专有云",
+          "Air-gapped 与离线更新路径（可议）",
+          "与现有 IdP、日志与监控对接",
+          "安全评估与渗透测试配合",
+          "现场或远程实施支持"
+        ]
+      }
+    ]
+  },
+  "testimonials": {
+    "kicker": "客户评价墙",
+    "title": "滚动弹幕里，是他们说过的话",
+    "subtitle": "四路横向循环，方向与速度略有不同；若系统开启「减少动态效果」，将改为静态列表，避免干扰阅读。",
+    "rowA": [
+      {
+        "quote": "审批链路和 MCP 工具对齐后，运营同学几乎不用学新后台。",
+        "who": "李某",
+        "hint": "增长负责人 · 消费品牌"
+      },
+      {
+        "quote": "多站点 SEO 模板一次配置，发布节奏终于敢加快了。",
+        "who": "陈某",
+        "hint": "市场技术 · B2B SaaS"
+      },
+      {
+        "quote": "审计日志按跳追溯，合规评审省了好几轮来回。",
+        "who": "赵某",
+        "hint": "安全架构 · 金融科技"
+      }
+    ],
+    "rowB": [
+      {
+        "quote": "Headless + 治理闸口，智能体只能做「被允许」的事。",
+        "who": "周某",
+        "hint": "平台工程 · 互联网"
+      },
+      {
+        "quote": "私有化部署按我们网络分区走，数据驻留写进合同条款。",
+        "who": "吴某",
+        "hint": "IT 总监 · 制造业"
+      },
+      {
+        "quote": "JSON-LD 与站点地图生成自动化，搜索同事直接点赞。",
+        "who": "郑某",
+        "hint": "SEO 负责人 · 教育"
+      }
+    ],
+    "rowC": [
+      {
+        "quote": "并行迁移那套脚本化导入，比一次性切换安心太多。",
+        "who": "孙某",
+        "hint": "研发经理 · 媒体"
+      },
+      {
+        "quote": "Webhook 接内部工单后，内容上线像流水线一样可追踪。",
+        "who": "马某",
+        "hint": "运维开发 · 电商"
+      },
+      {
+        "quote": "沙箱里跑通 POC，再扩到生产，决策成本很低。",
+        "who": "朱某",
+        "hint": "产品负责人 · 医疗信息化"
+      }
+    ],
+    "rowD": [
+      {
+        "quote": "渠道覆盖和环境变量这套，终于不用复制粘贴十份配置。",
+        "who": "胡某",
+        "hint": "前端负责人 · 出行"
+      },
+      {
+        "quote": "销售演示时直接拉 MCP 工具链，客户能「看见」治理。",
+        "who": "林某",
+        "hint": "售前架构 · 云厂商"
+      },
+      {
+        "quote": "多语言与规范 URL 一套模型管，区域站点少了很多扯皮。",
+        "who": "罗某",
+        "hint": "国际化 · 硬件品牌"
+      }
+    ]
+  },
+  "faq": {
+    "kicker": "FAQ · 问答索引",
+    "title": "选型与落地前，常被问到这些",
+    "subtitle": "左侧点选问题，右侧阅读完整说明；移动端上下排布。键盘方向键可在问题间切换。",
+    "ariaQuestions": "常见问题，单选查看答案",
+    "answerLabel": "答复",
+    "items": [
+      {
+        "q": "MCP 和直接调 API 有什么区别？",
+        "a": "API 面向系统集成与自动化脚本。MCP 把「起草、提交审核、预约发布」等步骤封装成工具，方便接进智能体工作流；权限与审计规则不变，不会绕过治理。"
+      },
+      {
+        "q": "SEO 能力包含哪些？",
+        "a": "标题与描述模板、规范 URL、Open Graph / Twitter Card、站点地图与 JSON-LD 等；可按渠道、环境覆盖，便于多站点统一维护。"
+      },
+      {
+        "q": "支持私有化吗？数据能否不出境？",
+        "a": "支持私有化或专有云部署，网络与安全策略可与贵司基础设施对齐。驻留范围与合规要求建议在售前阶段书面确认。"
+      },
+      {
+        "q": "与现有 CMS 并行迁移怎么做？",
+        "a": "通常按内容模型与 URL 策略分阶段推进：关键栏目先并行同步，再切换流量与 301；配合脚本化导入与双写期校验，降低一次性切换风险。"
+      },
+      {
+        "q": "如何申请试用或 POC？",
+        "a": "通过「联系销售」或关于页的入口，说明团队规模、站点数量与合规要求；可安排演示、沙箱环境或限定范围的 POC。"
+      }
+    ]
+  },
+  "footer": {
+    "tagline": "从草稿到上线，每一跳都留痕。编辑、工程与智能体同一节拍的内容中台。",
+    "product": {
+      "title": "产品",
+      "features": "产品能力",
+      "pricing": "定价"
+    },
+    "resources": {
+      "title": "资源",
+      "blog": "博客",
+      "faq": "常见问题"
+    },
+    "company": {
+      "title": "公司",
+      "about": "关于",
+      "privacy": "隐私政策",
+      "terms": "服务条款"
+    },
+    "copyright": "© 2026 Capybara CMS"
+  }
+}

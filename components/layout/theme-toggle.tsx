@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
+import { useTranslations } from "next-intl";
 import { Sun, Moon, Monitor } from "lucide-react";
 import { cn } from "@/lib/utils";
 import {
@@ -10,26 +11,26 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 
-const themes = [
-  { value: "light", icon: Sun, label: "日间模式" },
-  { value: "dark", icon: Moon, label: "夜间模式" },
-  { value: "system", icon: Monitor, label: "跟随系统" },
-];
-
 export function ThemeToggle() {
+  const t = useTranslations("theme");
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
+
+  const themes = [
+    { value: "light" as const, icon: Sun, label: t("light") },
+    { value: "dark" as const, icon: Moon, label: t("dark") },
+    { value: "system" as const, icon: Monitor, label: t("system") },
+  ];
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  // 获取当前主题信息（仅挂载后与 next-themes 同步，避免 SSR/CSR 图标与文案不一致导致 hydration 失败）
-  const currentTheme = themes.find((t) => t.value === theme) || themes[2];
+  const currentTheme = themes.find((th) => th.value === theme) ?? themes[2];
   const Icon = currentTheme.icon;
 
   const handleClick = () => {
-    const currentIndex = themes.findIndex((t) => t.value === theme);
+    const currentIndex = themes.findIndex((th) => th.value === theme);
     const nextIndex = (currentIndex + 1) % themes.length;
     setTheme(themes[nextIndex].value);
   };

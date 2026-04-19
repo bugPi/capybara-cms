@@ -2,27 +2,14 @@
 
 import "@/lib/gsap-register";
 import { useRef } from "react";
+import { useTranslations } from "next-intl";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { LANDING_SCROLL_TOGGLE } from "@/lib/landing-motion";
 
-const TAGS = [
-  "MCP",
-  "Model Context Protocol",
-  "Headless",
-  "REST & Webhook",
-  "SEO / JSON-LD",
-  "工作流与审批",
-  "多站点编排",
-  "API 优先",
-  "闸口内的智能体",
-  "治理与审计",
-  "私有化部署",
-  "边缘缓存",
-  "每一跳留痕",
-] as const;
-
 export function HomeMarquee() {
+  const t = useTranslations("marquee");
+  const tags = t.raw("tags") as string[];
   const root = useRef<HTMLElement>(null);
   const track = useRef<HTMLDivElement>(null);
   const band = useRef<HTMLDivElement>(null);
@@ -111,7 +98,7 @@ export function HomeMarquee() {
     { scope: root }
   );
 
-  const doubled = [...TAGS, ...TAGS];
+  const doubled = [...tags, ...tags];
 
   return (
     <section

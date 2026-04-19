@@ -1,17 +1,18 @@
 "use client";
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { Link, usePathname } from "@/i18n/routing";
+import { useTranslations } from "next-intl";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/layout/theme-toggle";
+import { LocaleSwitcher } from "@/components/layout/locale-switcher";
 import { cn } from "@/lib/utils";
 
 const navLinks = [
-  { href: "/", label: "首页" },
-  { href: "/blog", label: "博客" },
-  { href: "/about", label: "关于" },
-] as const;
+  { href: "/", labelKey: "home" as const },
+  { href: "/blog", labelKey: "blog" as const },
+  { href: "/about", labelKey: "about" as const },
+];
 
 function navLinkActive(pathname: string, href: string) {
   if (href === "/") return pathname === "/";
@@ -20,6 +21,7 @@ function navLinkActive(pathname: string, href: string) {
 
 export function Header() {
   const pathname = usePathname();
+  const t = useTranslations("nav");
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -42,9 +44,8 @@ export function Header() {
     >
       <nav
         className="mx-auto flex h-14 max-w-[min(100%,82rem)] items-center justify-between px-5 sm:px-8 lg:px-14"
-        aria-label="主导航"
+        aria-label={t("mainNav")}
       >
-        {/* 左侧 Logo */}
         <Link
           href="/"
           className="flex items-center font-medium text-foreground transition-opacity hover:opacity-70"
@@ -65,7 +66,6 @@ export function Header() {
           </svg>
         </Link>
 
-        {/* 中间导航链接 */}
         <div className="flex items-center gap-1">
           {navLinks.map((link) => {
             const active = navLinkActive(pathname, link.href);
@@ -80,17 +80,17 @@ export function Header() {
                     : "px-4 py-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
                 }
               >
-                {link.label}
+                {t(link.labelKey)}
               </Link>
             );
           })}
         </div>
 
-        {/* 右侧按钮 */}
         <div className="flex items-center gap-3">
+          <LocaleSwitcher />
           <ThemeToggle />
           <Button asChild size="sm" className="h-8 px-4 text-sm rounded-full">
-            <Link href="/login">登录</Link>
+            <a href="/capybara/login">{t("login")}</a>
           </Button>
         </div>
       </nav>

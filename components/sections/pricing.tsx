@@ -2,54 +2,13 @@
 
 import "@/lib/gsap-register";
 import { useCallback, useEffect, useId, useRef, useState } from "react";
+import { useTranslations } from "next-intl";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { LANDING_SCROLL_TOGGLE } from "@/lib/landing-motion";
 import { Sparkles } from "lucide-react";
-
-const tiers = [
-  {
-    name: "团队版",
-    blurb: "小队先跑起来，快过写 PPT",
-    priceLabel: "按席位数计费",
-    highlight: false,
-    features: [
-      "结构化内容与可视化编辑",
-      "工作流与基础审批",
-      "REST API 与 Webhook",
-      "SEO 元数据与站点地图",
-      "邮件支持",
-    ],
-  },
-  {
-    name: "企业版",
-    blurb: "要 SLA，也要找得到人",
-    priceLabel: "定制报价",
-    highlight: true,
-    features: [
-      "团队版全部能力",
-      "SSO / SAML、OIDC 路线",
-      "细粒度 RBAC 与审计日志",
-      "多环境、多区域与 SLA 选项",
-      "专属客户成功与技术支持",
-    ],
-  },
-  {
-    name: "私有化",
-    blurb: "数据住家里，网络听你的",
-    priceLabel: "按部署规模评估",
-    highlight: false,
-    features: [
-      "可部署于自有 VPC / 专有云",
-      "Air-gapped 与离线更新路径（可议）",
-      "与现有 IdP、日志与监控对接",
-      "安全评估与渗透测试配合",
-      "现场或远程实施支持",
-    ],
-  },
-] as const;
 
 /** 与 FAQ / 评价墙同系的极低饱和环境光，避免整块「换肤色」 */
 const tierGlow = [
@@ -58,7 +17,17 @@ const tierGlow = [
   "bg-[oklch(0.52_0.1_250/0.05)] dark:bg-[oklch(0.58_0.08_250/0.06)]",
 ] as const;
 
+type PricingTier = {
+  name: string;
+  blurb: string;
+  priceLabel: string;
+  highlight: boolean;
+  features: string[];
+};
+
 export function Pricing() {
+  const t = useTranslations("pricing");
+  const tiers = t.raw("tiers") as PricingTier[];
   const sectionRef = useRef<HTMLElement>(null);
   const [active, setActive] = useState(1);
   const uid = useId().replace(/:/g, "");
@@ -178,7 +147,7 @@ export function Pricing() {
         tl.kill();
       };
     },
-    { scope: sectionRef, dependencies: [active] }
+    { scope: sectionRef, dependencies: [active, tiers] }
   );
 
   useEffect(() => {
@@ -238,16 +207,16 @@ export function Pricing() {
         <div className="motion-price-head mx-auto mb-14 max-w-2xl text-center lg:mb-16">
           <p className="mb-3 inline-flex items-center justify-center gap-2 font-mono text-[11px] tracking-[0.32em] text-muted-foreground uppercase">
             <span className="size-1.5 rounded-full bg-brand" aria-hidden />
-            定价 · Pricing
+            {t("kicker")}
           </p>
           <h2
             id="pricing-heading"
             className="text-balance text-3xl font-semibold leading-[1.12] tracking-tight text-foreground sm:text-4xl lg:text-[2.35rem]"
           >
-            价签跟着现状走，不靠官网装统一价
+            {t("title")}
           </h2>
           <p className="mx-auto mt-5 max-w-lg text-pretty text-sm leading-relaxed text-muted-foreground sm:text-base">
-            席位、站点、合规、部署——差一格拼图，数字就变。点下面一栏换档位，看内容与说明怎么跟过来。
+            {t("subtitle")}
           </p>
         </div>
 
@@ -255,7 +224,7 @@ export function Pricing() {
           <div
             className="motion-price-rail relative"
             role="tablist"
-            aria-label="选择方案"
+            aria-label={t("ariaTabList")}
             onKeyDown={onTabListKeyDown}
           >
             <div className="grid grid-cols-3 gap-px bg-border/35 sm:gap-0 sm:bg-transparent">
@@ -282,7 +251,7 @@ export function Pricing() {
                       {tier.highlight ? (
                         <span className="mb-2 inline-flex items-center gap-1 font-mono text-[10px] font-medium uppercase tracking-[0.2em] text-primary">
                           <Sparkles className="size-3" aria-hidden />
-                          推荐
+                          {t("recommended")}
                         </span>
                       ) : (
                         <span className="mb-2 font-mono text-[10px] tabular-nums tracking-widest text-muted-foreground">
@@ -350,10 +319,10 @@ export function Pricing() {
                   className="h-12 rounded-full px-10 text-base"
                   variant={current.highlight ? "default" : "outline"}
                 >
-                  联系销售
+                  {t("contactSales")}
                 </Button>
                 <p className="text-center text-xs text-muted-foreground">
-                  聊完现状再报价 · 不塞冷冰冰的 PDF
+                  {t("ctaFootnote")}
                 </p>
               </div>
             </div>

@@ -2,36 +2,16 @@
 
 import "@/lib/gsap-register";
 import { useCallback, useEffect, useId, useRef, useState } from "react";
+import { useTranslations } from "next-intl";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ChevronRight } from "lucide-react";
 import { LANDING_SCROLL_TOGGLE } from "@/lib/landing-motion";
 import { cn } from "@/lib/utils";
 
-const faqs = [
-  {
-    q: "MCP 和直接调 API 有什么区别？",
-    a: "API 面向系统集成与自动化脚本。MCP 把「起草、提交审核、预约发布」等步骤封装成工具，方便接进智能体工作流；权限与审计规则不变，不会绕过治理。",
-  },
-  {
-    q: "SEO 能力包含哪些？",
-    a: "标题与描述模板、规范 URL、Open Graph / Twitter Card、站点地图与 JSON-LD 等；可按渠道、环境覆盖，便于多站点统一维护。",
-  },
-  {
-    q: "支持私有化吗？数据能否不出境？",
-    a: "支持私有化或专有云部署，网络与安全策略可与贵司基础设施对齐。驻留范围与合规要求建议在售前阶段书面确认。",
-  },
-  {
-    q: "与现有 CMS 并行迁移怎么做？",
-    a: "通常按内容模型与 URL 策略分阶段推进：关键栏目先并行同步，再切换流量与 301；配合脚本化导入与双写期校验，降低一次性切换风险。",
-  },
-  {
-    q: "如何申请试用或 POC？",
-    a: "通过「联系销售」或关于页的入口，说明团队规模、站点数量与合规要求；可安排演示、沙箱环境或限定范围的 POC。",
-  },
-] as const;
-
 export function Faq() {
+  const t = useTranslations("faq");
+  const faqs = t.raw("items") as { q: string; a: string }[];
   const sectionRef = useRef<HTMLElement>(null);
   const answerInnerRef = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(0);
@@ -122,7 +102,7 @@ export function Faq() {
   }, [active, baseId]);
 
   const onRadioKeyDown = useCallback((e: React.KeyboardEvent) => {
-    const n = faqs.length;
+    const n = faqs.length || 1;
     if (e.key === "ArrowDown" || e.key === "ArrowRight") {
       e.preventDefault();
       setActive((i) => (i + 1) % n);
@@ -151,16 +131,16 @@ export function Faq() {
         <div className="motion-faq-head mx-auto mb-14 max-w-2xl text-center lg:mb-16">
           <p className="mb-3 inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.32em] text-muted-foreground uppercase">
             <span className="size-1.5 rounded-full bg-brand" aria-hidden />
-            FAQ · 问答索引
+            {t("kicker")}
           </p>
           <h2
             id="faq-heading"
             className="text-balance text-3xl font-semibold leading-[1.12] tracking-tight text-foreground sm:text-4xl lg:text-[2.35rem]"
           >
-            选型与落地前，常被问到这些
+            {t("title")}
           </h2>
           <p className="mx-auto mt-5 max-w-lg text-pretty text-sm leading-relaxed text-muted-foreground sm:text-base">
-            左侧点选问题，右侧阅读完整说明；移动端上下排布。键盘方向键可在问题间切换。
+            {t("subtitle")}
           </p>
         </div>
 
@@ -168,7 +148,7 @@ export function Faq() {
           <div
             className="motion-faq-list lg:col-span-5"
             role="radiogroup"
-            aria-label="常见问题，单选查看答案"
+            aria-label={t("ariaQuestions")}
             onKeyDown={onRadioKeyDown}
           >
             <div className="flex flex-col overflow-hidden border-y border-border/50 md:rounded-2xl md:border md:border-border/45">
@@ -228,7 +208,7 @@ export function Faq() {
                 className="motion-faq-answer-inner border-t border-dashed border-border/55 pt-10 lg:border-t-0 lg:border-none lg:pt-0"
               >
                 <p className="font-mono text-[11px] tracking-[0.28em] text-muted-foreground uppercase">
-                  答复
+                  {t("answerLabel")}
                 </p>
                 <p className="mt-4 text-pretty text-xl font-semibold leading-snug tracking-tight text-foreground sm:text-2xl">
                   {current.q}

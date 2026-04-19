@@ -2,6 +2,7 @@
 
 import "@/lib/gsap-register";
 import { useRef } from "react";
+import { useLocale, useTranslations } from "next-intl";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { Button } from "@/components/ui/button";
@@ -16,15 +17,18 @@ import {
   Workflow,
 } from "lucide-react";
 
-const highlights = [
-  { icon: ShieldCheck, label: "治理与合规" },
-  { icon: Braces, label: "API 优先" },
-  { icon: PlugZap, label: "MCP 发博客" },
-  { icon: ScanSearch, label: "SEO 就绪" },
-  { icon: Workflow, label: "多站点编排" },
+const HIGHLIGHT_DEFS = [
+  { icon: ShieldCheck, key: "governance" as const },
+  { icon: Braces, key: "api" as const },
+  { icon: PlugZap, key: "mcp" as const },
+  { icon: ScanSearch, key: "seo" as const },
+  { icon: Workflow, key: "multiSite" as const },
 ];
 
 export function Hero() {
+  const t = useTranslations("hero");
+  const locale = useLocale();
+  const seoLocaleParam = locale === "zh" ? "zh-CN" : "en-US";
   const root = useRef<HTMLElement>(null);
   const panel = useRef<HTMLDivElement>(null);
   const glow = useRef<HTMLDivElement>(null);
@@ -225,14 +229,14 @@ export function Hero() {
         className="hero-watermark pointer-events-none absolute left-1/2 top-[18%] z-0 -translate-x-1/2 sm:top-[12%]"
         aria-hidden
       >
-        <span className="text-mega-watermark block text-center">CONTENT</span>
+        <span className="text-mega-watermark block text-center">{t("watermark")}</span>
       </div>
 
       <div className="hero-scroll-fade relative z-10 mx-auto max-w-[min(100%,90rem)] px-5 pb-24 pt-24 sm:px-8 sm:pb-28 sm:pt-28 lg:px-14 lg:pb-32 lg:pt-32">
         <div className="grid gap-12 lg:grid-cols-12 lg:gap-x-10 lg:gap-y-16">
           <div className="lg:col-span-7">
             <p className="hero-eyebrow mb-6 font-mono text-[11px] tracking-[0.28em] text-muted-foreground uppercase sm:text-xs">
-              企业内容 · 像列车时刻表一样准
+              {t("eyebrow")}
             </p>
             <h1
               id="hero-heading"
@@ -240,12 +244,12 @@ export function Hero() {
             >
               <span className="hero-title-line block overflow-hidden pb-1">
                 <span className="hero-title-inner inline-block origin-[50%_100%]">
-                  从草稿到上线，
+                  {t("title1")}
                 </span>
               </span>
               <span className="hero-title-line block overflow-hidden pb-1">
                 <span className="hero-title-inner text-gradient-brand inline-block origin-[50%_100%]">
-                  每一跳都留痕
+                  {t("title2")}
                 </span>
               </span>
             </h1>
@@ -253,17 +257,17 @@ export function Hero() {
 
           <div className="flex flex-col justify-end lg:col-span-5 lg:pl-2">
             <p className="hero-reveal-block max-w-sm text-pretty text-base leading-relaxed text-muted-foreground sm:text-lg">
-              编辑点发布，工程接 API，智能体过闸机——同一套节拍，谁也不掉拍。
+              {t("description")}
             </p>
 
             <div className="mt-8 flex flex-wrap gap-2">
-              {highlights.map((item) => (
+              {HIGHLIGHT_DEFS.map((item) => (
                 <div
-                  key={item.label}
+                  key={item.key}
                   className="hero-hl inline-flex items-center gap-2 rounded-full border border-border/70 bg-background/60 px-3 py-1.5 text-xs text-foreground backdrop-blur-sm sm:text-sm"
                 >
                   <item.icon className="size-3.5 shrink-0 text-brand" aria-hidden />
-                  <span className="font-medium">{item.label}</span>
+                  <span className="font-medium">{t(`highlights.${item.key}`)}</span>
                 </div>
               ))}
             </div>
@@ -271,7 +275,7 @@ export function Hero() {
             <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
               <div className="hero-reveal-cta w-full sm:w-auto">
                 <Button size="lg" className="h-12 rounded-full px-8 text-base">
-                  预约演示
+                  {t("cta")}
                   <ArrowRight className="ml-2 size-4" aria-hidden />
                 </Button>
               </div>
@@ -282,7 +286,7 @@ export function Hero() {
                   className="h-12 rounded-full border-border/80 bg-background/70 px-8 text-base backdrop-blur-sm"
                 >
                   <Play className="mr-2 size-4 shrink-0" aria-hidden />
-                  了解产品
+                  {t("learnMore")}
                 </Button>
               </div>
             </div>
@@ -328,7 +332,7 @@ export function Hero() {
                   <span className="size-2.5 rounded-full bg-amber-400/90" aria-hidden />
                   <span className="size-2.5 rounded-full bg-emerald-400/90" aria-hidden />
                   <span className="ml-2 truncate font-mono text-[11px] text-muted-foreground">
-                    capybara-cms / production
+                    {t("panel.windowTitle")}
                   </span>
                 </div>
 
@@ -336,7 +340,7 @@ export function Hero() {
                   <div className="rounded-2xl border border-border/50 bg-background/70 p-4 dark:bg-background/40">
                     <div className="flex items-start justify-between gap-3">
                       <div>
-                        <p className="text-xs font-medium text-muted-foreground">本周发布</p>
+                        <p className="text-xs font-medium text-muted-foreground">{t("panel.weeklyPublish")}</p>
                         <p className="mt-1 text-3xl font-semibold tabular-nums tracking-tight text-foreground">
                           1,248
                         </p>
@@ -376,16 +380,16 @@ export function Hero() {
                   <div className="grid grid-cols-2 gap-3">
                     <div className="rounded-2xl border border-border/50 bg-muted/25 p-3 dark:bg-muted/15">
                       <p className="text-[10px] font-medium uppercase tracking-wider text-muted-foreground">
-                        API p95
+                        {t("panel.apiP95")}
                       </p>
                       <p className="mt-1 text-lg font-semibold tabular-nums text-foreground">48ms</p>
-                      <p className="mt-0.5 text-[11px] text-muted-foreground">边缘节点</p>
+                      <p className="mt-0.5 text-[11px] text-muted-foreground">{t("panel.edgeNode")}</p>
                     </div>
                     <div className="rounded-2xl border border-border/50 bg-muted/25 p-3 dark:bg-muted/15">
                       <p className="text-[10px] font-medium uppercase tracking-wider text-muted-foreground">
-                        工作流
+                        {t("panel.workflow")}
                       </p>
-                      <p className="mt-1 text-lg font-semibold text-foreground">复核中</p>
+                      <p className="mt-1 text-lg font-semibold text-foreground">{t("panel.reviewing")}</p>
                       <div className="mt-2 flex gap-1">
                         <span className="bg-brand/80 h-1 flex-1 rounded-full" />
                         <span className="bg-brand/35 h-1 flex-1 rounded-full" />
@@ -401,7 +405,8 @@ export function Hero() {
                     </p>
                     <p className="font-mono text-[11px] leading-relaxed text-muted-foreground">
                       <span style={{ color: "var(--hero-api-label)" }}>GET</span>{" "}
-                      /v1/seo/pages/meta?locale=zh-CN
+                      {t("panel.apiLineSuffix")}
+                      {seoLocaleParam}
                     </p>
                   </div>
                 </div>

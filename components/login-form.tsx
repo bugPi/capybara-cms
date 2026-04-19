@@ -1,7 +1,6 @@
 "use client";
 
 import { useRef } from "react";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -44,7 +43,7 @@ export function LoginForm({
       <form ref={formRef} onSubmit={handleSubmit}>
         <FieldGroup>
           <div className="flex flex-col items-center gap-3 text-center">
-            <Link
+            <a
               href="/"
               className="flex flex-col items-center gap-3 font-medium"
             >
@@ -64,10 +63,10 @@ export function LoginForm({
                 </svg>
               </div>
               <span className="sr-only">Capybara CMS</span>
-            </Link>
+            </a>
             <h1 className="text-xl font-bold">登录到 Capybara CMS</h1>
             <FieldDescription>
-              没有账号？ <Link href="#" className="text-brand">联系销售</Link>
+              没有账号？ <a href="#" className="text-brand">联系销售</a>
             </FieldDescription>
           </div>
           <Field>
@@ -117,13 +116,13 @@ export function LoginForm({
       </form>
       <FieldDescription className="px-6 text-center">
         点击继续即表示您同意我们的{" "}
-        <Link href="/terms" className="text-brand">
+        <a href="/terms" className="text-brand">
           服务条款
-        </Link>{" "}
+        </a>{" "}
         和{" "}
-        <Link href="/privacy" className="text-brand">
+        <a href="/privacy" className="text-brand">
           隐私政策
-        </Link>
+        </a>
         。
       </FieldDescription>
     </div>

@@ -1,29 +1,31 @@
 "use client";
 
 import "@/lib/gsap-register";
-import Link from "next/link";
+import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/routing";
 import { useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 
-const footerLinks = {
-  product: [
-    { href: "/#features", label: "产品能力" },
-    { href: "/#pricing", label: "定价" },
-  ],
-  resources: [
-    { href: "/blog", label: "博客" },
-    { href: "/#faq", label: "常见问题" },
-  ],
-  company: [
-    { href: "/about", label: "关于" },
-    { href: "/privacy", label: "隐私政策" },
-    { href: "/terms", label: "服务条款" },
-  ],
-};
-
 export function Footer() {
+  const t = useTranslations("footer");
   const footerRef = useRef<HTMLElement>(null);
+
+  const footerLinks = {
+    product: [
+      { href: "/#features", label: t("product.features") },
+      { href: "/#pricing", label: t("product.pricing") },
+    ],
+    resources: [
+      { href: "/blog", label: t("resources.blog") },
+      { href: "/#faq", label: t("resources.faq") },
+    ],
+    company: [
+      { href: "/about", label: t("company.about") },
+      { href: "/privacy", label: t("company.privacy") },
+      { href: "/terms", label: t("company.terms") },
+    ],
+  };
 
   useGSAP(
     () => {
@@ -67,7 +69,6 @@ export function Footer() {
     >
       <div className="mx-auto max-w-[min(100%,82rem)] px-5 sm:px-8 lg:px-14 py-16 lg:py-20">
         <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
-          {/* Logo */}
           <div className="motion-foot-col col-span-2 md:col-span-1">
             <Link
               href="/"
@@ -89,13 +90,12 @@ export function Footer() {
               </svg>
             </Link>
             <p className="mt-4 max-w-xs text-sm leading-relaxed text-muted-foreground">
-              从草稿到上线，每一跳都留痕。编辑、工程与智能体同一节拍的内容中台。
+              {t("tagline")}
             </p>
           </div>
 
-          {/* 产品 */}
           <div className="motion-foot-col">
-            <h3 className="mb-4 text-sm font-medium text-foreground">产品</h3>
+            <h3 className="mb-4 text-sm font-medium text-foreground">{t("product.title")}</h3>
             <ul className="space-y-3">
               {footerLinks.product.map((link) => (
                 <li key={link.href}>
@@ -110,9 +110,8 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* 资源 */}
           <div className="motion-foot-col">
-            <h3 className="mb-4 text-sm font-medium text-foreground">资源</h3>
+            <h3 className="mb-4 text-sm font-medium text-foreground">{t("resources.title")}</h3>
             <ul className="space-y-3">
               {footerLinks.resources.map((link) => (
                 <li key={link.href}>
@@ -127,9 +126,8 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* 公司 */}
           <div className="motion-foot-col">
-            <h3 className="mb-4 text-sm font-medium text-foreground">公司</h3>
+            <h3 className="mb-4 text-sm font-medium text-foreground">{t("company.title")}</h3>
             <ul className="space-y-3">
               {footerLinks.company.map((link) => (
                 <li key={link.href}>
@@ -145,10 +143,9 @@ export function Footer() {
           </div>
         </div>
 
-        {/* 底部 */}
         <div className="motion-foot-bar mt-12 flex flex-col items-start justify-between gap-4 border-t border-border/40 pt-8 sm:flex-row sm:items-center">
           <p className="text-sm text-muted-foreground">
-            © 2026 Capybara CMS
+            {t("copyright")}
           </p>
           <a
             href="mailto:sales@capybara-cms.example.com"

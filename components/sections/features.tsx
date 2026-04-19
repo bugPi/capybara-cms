@@ -2,6 +2,7 @@
 
 import "@/lib/gsap-register";
 import { useRef } from "react";
+import { useTranslations } from "next-intl";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { cn } from "@/lib/utils";
@@ -23,81 +24,72 @@ import {
  */
 const bento = [
   {
+    id: "mcp" as const,
     icon: PlugZap,
-    title: "MCP 发博客",
-    description: "智能体在围栏里干活：起草、过审、定时发，脚印全留着。",
     sheet:
       "bg-[#f5e6a3] text-stone-900 dark:bg-[#3d3518] dark:text-[#faf6e8] dark:ring-1 dark:ring-amber-900/40",
     tilt: -2,
     span: "lg:col-span-7 lg:row-span-2 min-h-[200px] lg:min-h-[280px]",
   },
   {
+    id: "seo" as const,
     icon: ScanSearch,
-    title: "SEO 全链路",
-    description: "标题、URL、OG、站点地图与 JSON-LD——像给页面穿上统一制服。",
     sheet:
       "bg-[#cfeffc] text-stone-900 dark:bg-[#153038] dark:text-[#e8f7fc] dark:ring-1 dark:ring-cyan-900/45",
     tilt: 1.6,
     span: "lg:col-span-5 min-h-[160px]",
   },
   {
+    id: "editor" as const,
     icon: FileEdit,
-    title: "智能编辑器",
-    description: "Markdown、富文本、代码块一锅端——对内对外同一支笔。",
     sheet:
       "bg-[#e2e5f5] text-stone-900 dark:bg-[#252838] dark:text-[#eef0fc] dark:ring-1 dark:ring-indigo-900/40",
     tilt: -1.4,
     span: "lg:col-span-5 min-h-[160px]",
   },
   {
+    id: "collaboration" as const,
     icon: Users,
-    title: "协作与审批",
-    description: "谁动哪一段，系统记得比人清楚——批注、任务、权限到段落。",
     sheet:
       "bg-[#edd8f5] text-stone-900 dark:bg-[#301f3d] dark:text-[#f6edfb] dark:ring-1 dark:ring-violet-900/40",
     tilt: 1.9,
     span: "lg:col-span-4 min-h-[180px]",
   },
   {
+    id: "multiChannel" as const,
     icon: Globe,
-    title: "多渠道发布",
-    description: "一篇稿子建一次模，Web / App、公众号各自取用，少改五遍后台。",
     sheet:
       "bg-[#cfe2ff] text-stone-900 dark:bg-[#1a2840] dark:text-[#e8f0ff] dark:ring-1 dark:ring-blue-900/40",
     tilt: -1.2,
     span: "lg:col-span-4 min-h-[180px]",
   },
   {
+    id: "security" as const,
     icon: Shield,
-    title: "安全与部署",
-    description: "加密、权限、审计打底；云上或私有化，按合规来。",
     sheet:
       "bg-[#c8ebd4] text-stone-900 dark:bg-[#1a3024] dark:text-[#e8f5ec] dark:ring-1 dark:ring-emerald-900/40",
     tilt: 1.4,
     span: "lg:col-span-4 min-h-[180px]",
   },
   {
+    id: "api" as const,
     icon: Cable,
-    title: "REST 与 Webhook",
-    description: "内容与流程可编程；事件进工单、IM 或 CI，不另造黑箱。",
     sheet:
       "bg-[#c5e7f7] text-stone-900 dark:bg-[#153040] dark:text-[#e5f4fc] dark:ring-1 dark:ring-sky-900/40",
     tilt: -1.7,
     span: "lg:col-span-6 min-h-[170px]",
   },
   {
+    id: "analytics" as const,
     icon: BarChart3,
-    title: "阅读与转化洞见",
-    description: "曝光、停留、转化贴回栏目——下一季选题少拍脑袋。",
     sheet:
       "bg-[#fad4e8] text-stone-900 dark:bg-[#3a1f2e] dark:text-[#fcecf4] dark:ring-1 dark:ring-pink-900/40",
     tilt: 1.5,
     span: "lg:col-span-6 min-h-[170px]",
   },
   {
+    id: "performance" as const,
     icon: Zap,
-    title: "性能与边缘",
-    description: "静态 + CDN，缓存与失效按环境调，打开更稳。",
     sheet:
       "bg-[#ffe0c2] text-stone-900 dark:bg-[#3d2815] dark:text-[#fff5e8] dark:ring-1 dark:ring-orange-900/40",
     tilt: 0.6,
@@ -119,6 +111,7 @@ function PushPin() {
 }
 
 export function Features() {
+  const t = useTranslations("features");
   const sectionRef = useRef<HTMLElement>(null);
 
   useGSAP(
@@ -304,17 +297,17 @@ export function Features() {
       <div className="mx-auto max-w-[min(100%,76rem)] px-5 sm:px-8 lg:px-14">
         <div className="motion-feat-head mb-12 max-w-3xl text-left lg:mb-16">
           <h2 className="text-3xl font-semibold leading-snug tracking-tight text-foreground sm:text-4xl lg:text-[2.35rem]">
-            九块能力，一块一事
+            {t("title")}
           </h2>
           <p className="mt-4 max-w-xl text-base leading-relaxed text-muted-foreground sm:text-lg">
-            MCP 发博客、SEO、编辑器、协作与审批、多渠道发布、REST/Webhook、阅读洞见、性能边缘，再加安全与部署——各管一摊，按需跳读，不堆成一篇「全能说明书」。
+            {t("description")}
           </p>
         </div>
 
         <div className="grid auto-rows-fr grid-cols-1 gap-6 sm:gap-7 md:grid-cols-2 lg:grid-cols-12 lg:gap-7">
           {bento.map((item, index) => (
             <div
-              key={item.title}
+              key={item.id}
               data-tilt={item.tilt}
               className={cn(
                 "motion-feat-card feat-note-hull group relative isolate cursor-default perspective-[1000px]",
@@ -345,12 +338,12 @@ export function Features() {
                       <item.icon className="size-4.5" strokeWidth={2} aria-hidden />
                     </div>
                     <h3 className="min-w-0 pt-0.5 text-base font-semibold leading-snug tracking-tight sm:text-lg">
-                      {item.title}
+                      {t(`${item.id}.title`)}
                     </h3>
                   </div>
 
                   <p className="mt-3 text-sm leading-relaxed opacity-90">
-                    {item.description}
+                    {t(`${item.id}.description`)}
                   </p>
                 </article>
               </div>

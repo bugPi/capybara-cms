@@ -319,18 +319,18 @@ export function Pricing() {
               {String(active + 1).padStart(2, "0")}
             </div>
 
-            <div className="relative mx-auto max-w-3xl text-center sm:text-left">
+            <div className="relative mx-auto max-w-3xl text-center">
               <h3 className="motion-price-title text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
                 {current.name}
               </h3>
-              <p className="motion-price-blurb mx-auto mt-4 max-w-xl text-base leading-relaxed text-muted-foreground sm:mx-0 sm:text-lg">
+              <p className="motion-price-blurb mx-auto mt-4 max-w-xl text-base leading-relaxed text-muted-foreground sm:text-lg">
                 {current.blurb}
               </p>
-              <p className="motion-price-label mx-auto mt-8 font-mono text-2xl font-semibold tabular-nums tracking-tight text-foreground sm:mx-0 sm:text-3xl">
+              <p className="motion-price-label mx-auto mt-8 font-mono text-2xl font-semibold tabular-nums tracking-tight text-foreground sm:text-3xl">
                 {current.priceLabel}
               </p>
 
-              <ul className="motion-price-list mx-auto mt-12 max-w-2xl space-y-4 text-left sm:mx-0">
+              <ul className="motion-price-list mx-auto mt-12 max-w-2xl space-y-4 text-left">
                 {current.features.map((f) => (
                   <li
                     key={f}
@@ -344,7 +344,7 @@ export function Pricing() {
                 ))}
               </ul>
 
-              <div className="motion-price-cta mt-14 flex flex-col items-center gap-4 sm:items-start">
+              <div className="motion-price-cta mt-14 flex flex-col items-center gap-4">
                 <Button
                   size="lg"
                   className="h-12 rounded-full px-10 text-base"
@@ -352,7 +352,7 @@ export function Pricing() {
                 >
                   联系销售
                 </Button>
-                <p className="text-center text-xs text-muted-foreground sm:text-left">
+                <p className="text-center text-xs text-muted-foreground">
                   聊完现状再报价 · 不塞冷冰冰的 PDF
                 </p>
               </div>

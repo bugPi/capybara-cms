@@ -1,7 +1,7 @@
 "use client";
 
-import { useRef } from "react";
-import { useRouter } from "next/navigation";
+import { useActionState, useRef } from "react";
+import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
@@ -12,25 +12,25 @@ import {
   FieldSeparator,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { TriangleAlertIcon } from "lucide-react";
+import { login, type LoginState } from "@/lib/actions/auth";
 
-/** 演示账号（仅用于体验；接入真实鉴权后改为服务端校验或移除） */
-export const DEMO_EMAIL = "demo@capybara-cms.local";
+/** 演示账号（种子数据中的管理员；接入真实鉴权后移除） */
+export const DEMO_EMAIL = "admin@capybara-cms.local";
 export const DEMO_PASSWORD = "demo";
 
 export function LoginForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
-  const router = useRouter();
+  const [state, formAction, pending] = useActionState<LoginState, FormData>(
+    login,
+    null
+  );
   const formRef = useRef<HTMLFormElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    // TODO: 接入真实登录 API
-    router.push("/capybara/console");
-  };
 
   const handleDemoLogin = () => {
     if (emailRef.current) emailRef.current.value = DEMO_EMAIL;
@@ -40,10 +40,10 @@ export function LoginForm({
 
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
-      <form ref={formRef} onSubmit={handleSubmit}>
+      <form ref={formRef} action={formAction}>
         <FieldGroup>
           <div className="flex flex-col items-center gap-3 text-center">
-            <a
+            <Link
               href="/"
               className="flex flex-col items-center gap-3 font-medium"
             >
@@ -63,12 +63,21 @@ export function LoginForm({
                 </svg>
               </div>
               <span className="sr-only">Capybara CMS</span>
-            </a>
+            </Link>
             <h1 className="text-xl font-bold">登录到 Capybara CMS</h1>
             <FieldDescription>
               没有账号？ <a href="#" className="text-brand">联系销售</a>
             </FieldDescription>
           </div>
+
+          {state?.error ? (
+            <Alert variant="destructive">
+              <TriangleAlertIcon />
+              <AlertTitle>登录失败</AlertTitle>
+              <AlertDescription>{state.error}</AlertDescription>
+            </Alert>
+          ) : null}
+
           <Field>
             <FieldLabel htmlFor="email">邮箱</FieldLabel>
             <Input
@@ -96,8 +105,8 @@ export function LoginForm({
             />
           </Field>
           <Field>
-            <Button type="submit" size="lg" className="w-full">
-              登录
+            <Button type="submit" size="lg" className="w-full" disabled={pending}>
+              {pending ? "登录中…" : "登录"}
             </Button>
           </Field>
           <FieldSeparator>or</FieldSeparator>
@@ -116,13 +125,13 @@ export function LoginForm({
       </form>
       <FieldDescription className="px-6 text-center">
         点击继续即表示您同意我们的{" "}
-        <a href="/terms" className="text-brand">
+        <Link href="/terms" className="text-brand">
           服务条款
-        </a>{" "}
+        </Link>{" "}
         和{" "}
-        <a href="/privacy" className="text-brand">
+        <Link href="/privacy" className="text-brand">
           隐私政策
-        </a>
+        </Link>
         。
       </FieldDescription>
     </div>

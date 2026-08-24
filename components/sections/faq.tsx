@@ -1,7 +1,7 @@
 "use client";
 
 import "@/lib/gsap-register";
-import { useCallback, useEffect, useId, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
@@ -101,7 +101,7 @@ export function Faq() {
     document.getElementById(`${baseId}-q-${active}`)?.focus();
   }, [active, baseId]);
 
-  const onRadioKeyDown = useCallback((e: React.KeyboardEvent) => {
+  const onRadioKeyDown = (e: React.KeyboardEvent) => {
     const n = faqs.length || 1;
     if (e.key === "ArrowDown" || e.key === "ArrowRight") {
       e.preventDefault();
@@ -116,7 +116,7 @@ export function Faq() {
       e.preventDefault();
       setActive(n - 1);
     }
-  }, []);
+  };
 
   const current = faqs[active];
 

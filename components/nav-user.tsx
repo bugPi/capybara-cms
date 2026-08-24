@@ -1,11 +1,14 @@
 "use client";
 
+import { useTransition } from "react";
+import { toast } from "sonner";
 import Link from "next/link";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import {
@@ -14,7 +17,8 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
-import { LogOutIcon } from "lucide-react";
+import { KeyRoundIcon, LogOutIcon } from "lucide-react";
+import { logout } from "@/lib/actions/auth";
 
 export function NavUser({
   user,
@@ -22,13 +26,24 @@ export function NavUser({
   user: {
     name: string;
     email: string;
-    avatar: string;
+    avatar?: string;
   };
 }) {
   const { isMobile } = useSidebar();
+  const [pending, startTransition] = useTransition();
 
   // 取邮箱第一个字符作为头像显示
   const avatarText = user.email.charAt(0).toUpperCase();
+
+  const handleLogout = () => {
+    startTransition(async () => {
+      try {
+        await logout();
+      } catch (err) {
+        toast.error(err instanceof Error ? err.message : "退出失败");
+      }
+    });
+  };
 
   return (
     <SidebarMenu>
@@ -65,11 +80,23 @@ export function NavUser({
                 </div>
               </div>
             </DropdownMenuLabel>
-            <DropdownMenuItem asChild className="rounded-lg px-2 py-1.5 cursor-pointer focus:bg-destructive/10 focus:text-destructive">
-              <Link href="/capybara/login" className="flex items-center gap-2">
-                <LogOutIcon className="size-4" />
-                <span>退出登录</span>
+            <DropdownMenuItem asChild className="rounded-lg px-2 py-1.5 cursor-pointer">
+              <Link href="/capybara/account" className="flex items-center gap-2">
+                <KeyRoundIcon className="size-4" />
+                <span>修改密码</span>
               </Link>
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem
+              onSelect={(e) => {
+                e.preventDefault();
+                handleLogout();
+              }}
+              disabled={pending}
+              className="rounded-lg px-2 py-1.5 cursor-pointer focus:bg-destructive/10 focus:text-destructive"
+            >
+              <LogOutIcon className="size-4" />
+              <span>{pending ? "退出中…" : "退出登录"}</span>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

@@ -143,8 +143,9 @@ export function Features() {
               duration: 0.4,
               ease: "back.out(1.25)",
             });
-            inner &&
+            if (inner) {
               gsap.to(inner, { z: 20, duration: 0.35, ease: "power2.out" });
+            }
           };
 
           const leave = () => {
@@ -156,7 +157,7 @@ export function Features() {
               duration: 0.48,
               ease: "power3.out",
             });
-            inner &&
+            if (inner) {
               gsap.to(inner, {
                 rotationX: 0,
                 rotationY: 0,
@@ -164,6 +165,7 @@ export function Features() {
                 duration: 0.5,
                 ease: "power3.out",
               });
+            }
           };
 
           let rxTo: ReturnType<typeof gsap.quickTo> | null = null;
@@ -261,7 +263,7 @@ export function Features() {
         );
       }
 
-      let removeInteractions = reduceMotion ? () => {} : setupInteractions();
+      const removeInteractions = reduceMotion ? () => {} : setupInteractions();
       const head = section.querySelector(".motion-feat-head");
       let headParallax: gsap.core.Tween | null = null;
       if (head) {

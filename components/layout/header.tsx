@@ -1,6 +1,7 @@
 "use client";
 
 import { Link, usePathname } from "@/i18n/routing";
+import NextLink from "next/link";
 import { useTranslations } from "next-intl";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
@@ -90,7 +91,7 @@ export function Header() {
           <LocaleSwitcher />
           <ThemeToggle />
           <Button asChild size="sm" className="h-8 px-4 text-sm rounded-full">
-            <a href="/capybara/login">{t("login")}</a>
+            <NextLink href="/capybara/login">{t("login")}</NextLink>
           </Button>
         </div>
       </nav>

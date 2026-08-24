@@ -360,3 +360,263 @@
     transparent
   );
 }
+
+/* ================= 后台控制台：Arco Design 中后台风格 ================= */
+
+/*
+ * Arco 设计 token 作用域：仅作用于 /capybara 后台（前台营销站不受影响）。
+ * 通过覆盖 shadcn 语义变量，让 button/table/card/badge 等组件自动呈现
+ * Arco 风格：arcoblue 主色、小圆角、浅灰页面底 + 白色卡片、灰底表头。
+ */
+.arco {
+  /* Arco 灰阶与主色（供自定义类直接引用） */
+  --arco-blue: #165dff;
+  --arco-blue-hover: #4080ff;
+  --arco-blue-light: #e8f3ff;
+  --arco-text-1: #1d2129; /* 一级文字 */
+  --arco-text-2: #4e5969; /* 二级文字 */
+  --arco-text-3: #86909c; /* 次要文字 */
+  --arco-fill-1: #f7f8fa; /* 页面底 / 浅填充 */
+  --arco-fill-2: #f2f3f5; /* 灰填充（hover/表头） */
+  --arco-border: #e5e6eb;
+  --arco-green: #00b42a;
+  --arco-orange: #ff7d00;
+  --arco-red: #f53f3f;
+
+  /* shadcn 语义变量覆盖 */
+  --brand: var(--arco-blue);
+  --brand-foreground: #ffffff;
+  --brand-muted: var(--arco-blue-light);
+  --brand-accent: var(--arco-blue);
+  --brand-cool: #0fc6c2; /* arco 青色点缀（图表辅色） */
+  --primary: var(--arco-blue);
+  --primary-foreground: #ffffff;
+  --ring: var(--arco-blue);
+  --foreground: var(--arco-text-1);
+  --background: #ffffff;
+  --card: #ffffff;
+  --card-foreground: var(--arco-text-1);
+  --popover: #ffffff;
+  --popover-foreground: var(--arco-text-1);
+  --secondary: var(--arco-fill-2);
+  --secondary-foreground: var(--arco-text-2);
+  --muted: var(--arco-fill-1);
+  --muted-foreground: var(--arco-text-3);
+  --accent: var(--arco-fill-2);
+  --accent-foreground: var(--arco-text-1);
+  --destructive: var(--arco-red);
+  --border: var(--arco-border);
+  --input: var(--arco-border);
+  --radius: 0.1875rem; /* Arco 小圆角：按钮/输入 ≈2px，卡片 ≈3-4px */
+  --sidebar: #ffffff;
+  --sidebar-foreground: var(--arco-text-1);
+  --sidebar-primary: var(--arco-blue);
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: var(--arco-blue-light);
+  --sidebar-accent-foreground: var(--arco-blue);
+  --sidebar-border: var(--arco-border);
+  --sidebar-ring: var(--arco-blue);
+
+  /* 控制台表面 */
+  --console-bg: var(--arco-fill-1);
+  --console-header-bg: #ffffff;
+}
+
+.dark .arco {
+  --arco-blue: #3c7eff;
+  --arco-blue-hover: #6aa1ff;
+  --arco-blue-light: rgb(60 126 255 / 0.16);
+  --arco-text-1: rgb(255 255 255 / 0.9);
+  --arco-text-2: rgb(255 255 255 / 0.7);
+  --arco-text-3: rgb(255 255 255 / 0.45);
+  --arco-fill-1: #17171a;
+  --arco-fill-2: rgb(255 255 255 / 0.08);
+  --arco-border: #333335;
+  --arco-green: #23c343;
+  --arco-orange: #ff9626;
+  --arco-red: #f76965;
+
+  --brand: var(--arco-blue);
+  --brand-foreground: #ffffff;
+  --brand-muted: var(--arco-blue-light);
+  --brand-accent: var(--arco-blue);
+  --brand-cool: #14c9c9;
+  --primary: var(--arco-blue);
+  --primary-foreground: #ffffff;
+  --ring: var(--arco-blue);
+  --foreground: var(--arco-text-1);
+  --background: #232324;
+  --card: #232324;
+  --card-foreground: var(--arco-text-1);
+  --popover: #2a2a2b;
+  --popover-foreground: var(--arco-text-1);
+  --secondary: var(--arco-fill-2);
+  --secondary-foreground: var(--arco-text-2);
+  --muted: rgb(255 255 255 / 0.06);
+  --muted-foreground: var(--arco-text-3);
+  --accent: var(--arco-fill-2);
+  --accent-foreground: var(--arco-text-1);
+  --destructive: var(--arco-red);
+  --border: var(--arco-border);
+  --input: var(--arco-border);
+  --sidebar: #232324;
+  --sidebar-foreground: var(--arco-text-1);
+  --sidebar-primary: var(--arco-blue);
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: var(--arco-blue-light);
+  --sidebar-accent-foreground: var(--arco-blue-hover);
+  --sidebar-border: var(--arco-border);
+  --sidebar-ring: var(--arco-blue);
+
+  --console-bg: var(--arco-fill-1);
+  --console-header-bg: #232324;
+}
+
+/* 内容区：Arco 经典浅灰底（卡片白色浮于其上） */
+.console-surface {
+  background-color: var(--console-bg);
+}
+
+/* 顶栏：白底实色 + 细分隔线（Arco Pro 风格） */
+.console-header {
+  background: var(--console-header-bg);
+}
+
+/* Arco 表格：表头浅灰底 + 二级文字色 */
+.arco [data-slot="table-header"] {
+  background: var(--muted);
+}
+.arco [data-slot="table-head"] {
+  color: var(--arco-text-2);
+  font-weight: 500;
+}
+.arco [data-slot="table-row"] {
+  border-color: var(--arco-border);
+}
+
+/* —— 克制的入场动画 —— */
+@keyframes capy-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.anim-fade-up {
+  animation: capy-fade-up 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes capy-page-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.anim-page {
+  animation: capy-page-in 0.3s ease both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .anim-fade-up,
+  .anim-page {
+    animation: none !important;
+  }
+}
+
+/* ================= 沉浸式文章编辑器 ================= */
+
+/* 顶栏：毛玻璃浅灰底，吸顶 */
+.immersive-topbar {
+  background: color-mix(in oklch, var(--console-bg) 85%, transparent);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* 大标题输入：无边框、无焦点环，融入页面 */
+.immersive-title {
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 1.875rem;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  color: var(--foreground);
+  padding: 0;
+}
+.immersive-title::placeholder {
+  color: color-mix(in oklch, var(--muted-foreground) 55%, transparent);
+}
+
+/* wangEditor 主题：跟随 Arco 变量 */
+.immersive-editor {
+  --w-e-toolbar-color: var(--arco-text-2);
+  --w-e-toolbar-bg-color: transparent;
+  --w-e-toolbar-active-color: var(--arco-blue);
+  --w-e-toolbar-active-bg-color: var(--arco-blue-light);
+  --w-e-toolbar-disabled-color: var(--arco-text-3);
+  --w-e-toolbar-border-color: var(--arco-border);
+  --w-e-textarea-bg-color: transparent;
+  --w-e-textarea-color: var(--foreground);
+  --w-e-textarea-slight-border-color: var(--arco-border);
+  --w-e-textarea-slight-bg-color: var(--arco-fill-2);
+  --w-e-textarea-selected-border-color: var(--arco-blue);
+  --w-e-modal-button-bg-color: var(--arco-blue);
+  --w-e-modal-button-border-color: var(--arco-blue);
+}
+
+/* 工具栏：吸顶在 slim topbar 之下，融入页面背景 */
+.immersive-editor .w-e-toolbar {
+  position: sticky;
+  top: 48px;
+  z-index: 20;
+  background: color-mix(in oklch, var(--console-bg) 88%, transparent);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--arco-border);
+}
+.immersive-editor .w-e-bar-item button {
+  border-radius: 3px;
+}
+
+/* 编辑区：无边框、文档化排版、随内容自动增高（页面级滚动） */
+.immersive-editor .w-e-text-container {
+  background: transparent;
+  height: auto !important;
+}
+.immersive-editor .w-e-text-container .w-e-scroll {
+  height: auto;
+}
+.immersive-editor .w-e-text-container [data-slate-editor] {
+  padding: 20px 0 40vh;
+  font-size: 16px;
+  line-height: 1.8;
+  color: var(--foreground);
+  min-height: 55vh;
+}
+.immersive-editor .w-e-text-container [data-slate-editor] p {
+  margin: 0.75em 0;
+}
+.immersive-editor .w-e-text-placeholder {
+  top: 20px !important;
+  left: 0 !important;
+  font-size: 16px;
+  color: color-mix(in oklch, var(--muted-foreground) 60%, transparent);
+  font-style: normal;
+}
+
+/* 弹层（链接/表格菜单等）跟随 Arco 深色 */
+.dark .arco {
+  --w-e-modal-bg-color: #2a2a2b;
+  --w-e-modal-color: rgb(255 255 255 / 0.9);
+  --w-e-modal-button-bg-color: #3c7eff;
+  --w-e-modal-button-border-color: #3c7eff;
+}

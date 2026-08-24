@@ -6,7 +6,12 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeHighlight from "rehype-highlight";
 import "highlight.js/styles/github-dark.css";
-import { getPostBySlug, getSortedPosts } from "@/lib/blog-posts";
+import {
+  getPublishedPostBySlug,
+  getPublishedPosts,
+  getRelatedPosts,
+  type BlogPostItem,
+} from "@/lib/blog";
 import { cn } from "@/lib/utils";
 
 interface PageProps {
@@ -14,14 +19,14 @@ interface PageProps {
 }
 
 export async function generateStaticParams() {
-  const posts = getSortedPosts();
+  const posts = getPublishedPosts();
   return posts.map((post) => ({ slug: post.slug }));
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { locale, slug } = await params;
   const t = await getTranslations({ locale, namespace: "blog" });
-  const post = getPostBySlug(slug, locale);
+  const post = getPublishedPostBySlug(slug);
 
   if (!post) {
     return { title: t("meta.notFoundTitle") };
@@ -29,13 +34,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   return {
     title: post.title,
-    description: post.excerpt,
+    description: post.excerpt ?? undefined,
     openGraph: {
       title: post.title,
-      description: post.excerpt,
+      description: post.excerpt ?? undefined,
       type: "article",
-      publishedTime: post.date,
-      authors: [post.author],
+      publishedTime: post.date || undefined,
+      authors: post.author ? [post.author] : undefined,
       tags: post.tags,
     },
   };
@@ -125,25 +130,63 @@ const categoryStyles: Record<string, { text: string; bg: string }> = {
   },
 };
 
+/** 正文容器样式（prose）——HTML 与 Markdown 两种渲染共用 */
+const PROSE_CLASSES = cn(
+  "prose prose-stone dark:prose-invert max-w-none",
+  "prose-lg",
+  "prose-headings:font-semibold prose-headings:tracking-tight prose-headings:text-foreground",
+  "prose-h2:scroll-mt-24 prose-h2:text-2xl prose-h2:mt-14 prose-h2:mb-6 prose-h2:border-b prose-h2:border-border/25 prose-h2:pb-3 prose-h2:first:mt-0",
+  "prose-h3:text-lg prose-h3:mt-10 prose-h3:mb-4 prose-h3:font-medium",
+  "prose-p:text-foreground/90 prose-p:leading-[1.75] prose-p:mb-5",
+  "prose-a:text-brand prose-a:font-medium prose-a:underline-offset-4 prose-a:hover:underline",
+  "prose-code:text-foreground prose-code:bg-muted/30 prose-code:px-2 prose-code:py-1 prose-code:rounded prose-code:font-mono prose-code:text-sm prose-code:before:content-none prose-code:after:content-none",
+  "prose-pre:bg-muted/25 prose-pre:border prose-pre:border-border/30 prose-pre:rounded-xl prose-pre:p-4 prose-pre:overflow-x-auto",
+  "prose-strong:text-foreground prose-strong:font-semibold",
+  "prose-ul:my-6 prose-ol:my-6 prose-ul:pl-4 prose-ol:pl-4",
+  "prose-li:text-foreground/85 prose-li:leading-relaxed prose-li:my-1.5",
+  "prose-blockquote:not-italic prose-blockquote:text-foreground/80 prose-blockquote:border-l-brand/30 prose-blockquote:pl-6 prose-blockquote:my-8",
+  "prose-img:rounded-xl prose-img:border prose-img:border-border/30",
+  "prose-table:border-collapse prose-th:border prose-th:border-border/30 prose-th:px-3 prose-th:py-2 prose-td:border prose-td:border-border/30 prose-td:px-3 prose-td:py-2"
+);
+
+/** 内容渲染：富文本 HTML 原样渲染，历史 Markdown 走 react-markdown */
+function PostContent({ post }: { post: BlogPostItem }) {
+  const content = post.content ?? "";
+  const looksLikeHtml = /^\s*</.test(content);
+
+  if (looksLikeHtml) {
+    return (
+      <div
+        className={PROSE_CLASSES}
+        dangerouslySetInnerHTML={{ __html: content }}
+      />
+    );
+  }
+
+  return (
+    <div className={PROSE_CLASSES}>
+      <ReactMarkdown
+        remarkPlugins={[remarkGfm]}
+        rehypePlugins={[rehypeHighlight]}
+      >
+        {content}
+      </ReactMarkdown>
+    </div>
+  );
+}
+
 export default async function BlogPostPage({ params }: PageProps) {
   const { locale, slug } = await params;
   const t = await getTranslations({ locale, namespace: "blog" });
-  const post = getPostBySlug(slug, locale);
+  const post = getPublishedPostBySlug(slug);
 
   if (!post) {
     notFound();
   }
 
-  const allPosts = getSortedPosts(locale);
-  const relatedPosts = allPosts
-    .filter(
-      (p) =>
-        p.slug !== slug &&
-        p.tagIds.some((tid) => post.tagIds.includes(tid))
-    )
-    .slice(0, 2);
+  const relatedPosts = getRelatedPosts(post, 2);
 
-  const primaryTagId = post.tagIds[0];
+  const primaryTagId = post.tagIds[0] ?? "";
   const primaryTag = post.tags[0];
   const style = categoryStyles[primaryTagId] || {
     text: "text-brand",
@@ -178,75 +221,55 @@ export default async function BlogPostPage({ params }: PageProps) {
         </h1>
 
         {/* 摘要 */}
-        <p className="mt-6 text-lg text-muted-foreground leading-relaxed">
-          {post.excerpt}
-        </p>
+        {post.excerpt ? (
+          <p className="mt-6 text-lg text-muted-foreground leading-relaxed">
+            {post.excerpt}
+          </p>
+        ) : null}
 
         {/* 分隔线 */}
         <div className="mt-12 mb-12 h-px bg-border/30" aria-hidden />
 
-        {/* 正文 - Markdown 渲染 */}
-        <div
-          className={cn(
-            "prose prose-stone dark:prose-invert max-w-none",
-            "prose-lg",
-            "prose-headings:font-semibold prose-headings:tracking-tight prose-headings:text-foreground",
-            "prose-h2:scroll-mt-24 prose-h2:text-2xl prose-h2:mt-14 prose-h2:mb-6 prose-h2:border-b prose-h2:border-border/25 prose-h2:pb-3 prose-h2:first:mt-0",
-            "prose-h3:text-lg prose-h3:mt-10 prose-h3:mb-4 prose-h3:font-medium",
-            "prose-p:text-foreground/90 prose-p:leading-[1.75] prose-p:mb-5",
-            "prose-a:text-brand prose-a:font-medium prose-a:underline-offset-4 prose-a:hover:underline",
-            "prose-code:text-foreground prose-code:bg-muted/30 prose-code:px-2 prose-code:py-1 prose-code:rounded prose-code:font-mono prose-code:text-sm prose-code:before:content-none prose-code:after:content-none",
-            "prose-pre:bg-muted/25 prose-pre:border prose-pre:border-border/30 prose-pre:rounded-xl prose-pre:p-4 prose-pre:overflow-x-auto",
-            "prose-strong:text-foreground prose-strong:font-semibold",
-            "prose-ul:my-6 prose-ol:my-6 prose-ul:pl-4 prose-ol:pl-4",
-            "prose-li:text-foreground/85 prose-li:leading-relaxed prose-li:my-1.5",
-            "prose-blockquote:not-italic prose-blockquote:text-foreground/80 prose-blockquote:border-l-brand/30 prose-blockquote:pl-6 prose-blockquote:my-8",
-            "prose-img:rounded-xl prose-img:border prose-img:border-border/30",
-            "prose-table:border-collapse prose-th:border prose-th:border-border/30 prose-th:px-3 prose-th:py-2 prose-td:border prose-td:border-border/30 prose-td:px-3 prose-td:py-2"
-          )}
-        >
-          <ReactMarkdown
-            remarkPlugins={[remarkGfm]}
-            rehypePlugins={[rehypeHighlight]}
-          >
-            {post.content}
-          </ReactMarkdown>
-        </div>
+        {/* 正文 */}
+        <PostContent post={post} />
 
         {/* 标签 */}
-        <div className="mt-14 pt-10 border-t border-border/25">
-          <div className="flex flex-wrap gap-2">
-            {post.tagIds.map((tagId, i) => {
-              const tagStyle = categoryStyles[tagId] || style;
-              const label = post.tags[i];
-              return (
-                <span
-                  key={tagId}
-                  className={cn(
-                    "inline-flex px-3 py-1.5 rounded text-xs font-medium",
-                    tagStyle.bg,
-                    tagStyle.text
-                  )}
-                >
-                  {label}
-                </span>
-              );
-            })}
+        {post.tags.length > 0 ? (
+          <div className="mt-14 pt-10 border-t border-border/25">
+            <div className="flex flex-wrap gap-2">
+              {post.tagIds.map((tagId, i) => {
+                const tagStyle = categoryStyles[tagId] || style;
+                return (
+                  <span
+                    key={tagId}
+                    className={cn(
+                      "inline-flex px-3 py-1.5 rounded text-xs font-medium",
+                      tagStyle.bg,
+                      tagStyle.text
+                    )}
+                  >
+                    {post.tags[i] ?? tagId}
+                  </span>
+                );
+              })}
+            </div>
           </div>
-        </div>
+        ) : null}
 
         {/* 作者 */}
-        <div className="mt-10 flex items-center gap-3">
-          <div className="w-10 h-10 rounded-full bg-muted/30 flex items-center justify-center text-sm font-medium text-foreground">
-            {post.author.slice(0, 2).toUpperCase()}
+        {post.author ? (
+          <div className="mt-10 flex items-center gap-3">
+            <div className="w-10 h-10 rounded-full bg-muted/30 flex items-center justify-center text-sm font-medium text-foreground">
+              {post.author.slice(0, 2).toUpperCase()}
+            </div>
+            <div>
+              <p className="text-sm font-medium text-foreground">{post.author}</p>
+              <p className="text-xs text-muted-foreground">
+                {t("post.authorSubtitle")}
+              </p>
+            </div>
           </div>
-          <div>
-            <p className="text-sm font-medium text-foreground">{post.author}</p>
-            <p className="text-xs text-muted-foreground">
-              {t("post.authorSubtitle")}
-            </p>
-          </div>
-        </div>
+        ) : null}
 
         {/* 相关阅读 */}
         {relatedPosts.length > 0 && (
@@ -256,7 +279,8 @@ export default async function BlogPostPage({ params }: PageProps) {
             </p>
             <div className="grid gap-8 sm:grid-cols-2">
               {relatedPosts.map((related) => {
-                const relStyle = categoryStyles[related.tagIds[0]] || style;
+                const relStyle =
+                  categoryStyles[related.tagIds[0] ?? ""] || style;
                 return (
                   <Link
                     key={related.slug}
@@ -270,7 +294,7 @@ export default async function BlogPostPage({ params }: PageProps) {
                         relStyle.text
                       )}
                     >
-                      {related.tags[0]}
+                      {related.tags[0] ?? related.slug}
                     </span>
                     <h3 className="text-base font-medium text-foreground group-hover:text-brand transition-colors leading-snug">
                       {related.title}

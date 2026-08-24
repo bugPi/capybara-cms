@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
 import { useTheme } from "next-themes";
 import { useTranslations } from "next-intl";
 import { Sun, Moon, Monitor } from "lucide-react";
@@ -11,20 +11,27 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 
+const emptySubscribe = () => () => {};
+
+/** 客户端水合检测（避免主题切换按钮与服务端渲染不一致） */
+function useHydrated() {
+  return useSyncExternalStore(
+    emptySubscribe,
+    () => true,
+    () => false
+  );
+}
+
 export function ThemeToggle() {
   const t = useTranslations("theme");
   const { theme, setTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
+  const mounted = useHydrated();
 
   const themes = [
     { value: "light" as const, icon: Sun, label: t("light") },
     { value: "dark" as const, icon: Moon, label: t("dark") },
     { value: "system" as const, icon: Monitor, label: t("system") },
   ];
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   const currentTheme = themes.find((th) => th.value === theme) ?? themes[2];
   const Icon = currentTheme.icon;

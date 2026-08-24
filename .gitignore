@@ -39,3 +39,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# pnpm local store marker
+.pnpm-store/
+
+# local runtime data (SQLite)
+/data

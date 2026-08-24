@@ -1,7 +1,7 @@
 "use client";
 
 import "@/lib/gsap-register";
-import { useCallback, useEffect, useId, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
@@ -156,7 +156,7 @@ export function Pricing() {
     document.getElementById(`${uid}-tab-${active}`)?.focus();
   }, [active, uid]);
 
-  const onTabListKeyDown = useCallback((e: React.KeyboardEvent) => {
+  const onTabListKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "ArrowDown" || e.key === "ArrowRight") {
       e.preventDefault();
       setActive((i) => Math.min(tiers.length - 1, i + 1));
@@ -170,7 +170,7 @@ export function Pricing() {
       e.preventDefault();
       setActive(tiers.length - 1);
     }
-  }, []);
+  };
 
   return (
     <section
